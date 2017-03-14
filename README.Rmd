@@ -44,16 +44,16 @@ package {IN DEVELOPMENT}
 
 # IQSS Best Practices for R Language Software Development and Sustainability
 
-`init_iqss_package` initialises a skeleton package that allows you to begin to
+`init_iqss_package` initializes a skeleton package that allows you to begin to
 implement the IQSS Best Practices for Software Development and Sustainability.
 
 **IN DEVELOPMENT**
 
 - **Documentation**: Sets up documentation dynamically generated using [RMarkdown](http://rmarkdown.rstudio.com/)
 and [roxygen2](https://CRAN.R-project.org/package=roxygen2). This includes a *README.Rmd*
-file along with a package websbsite generated with [pkgdown](https://github.com/hadley/pkgdown).
+file along with a package website generated with [pkgdown](https://github.com/hadley/pkgdown).
 The README.Rmd file should lay out core information about the package's motivation, methods and
-include a dynamically generated "quickstart" example. `init_iqss_package` also creates a
+include a dynamically generated "quick-start" example. `init_iqss_package` also creates a
 *NEWS.md* file for you to document all changes made to the package by version.
 
 - **License**: Adds a [GPL-3 License](https://www.gnu.org/licenses/gpl-3.0.en.html)
@@ -84,7 +84,7 @@ install_github('IQSS/IQSSdevtools')
 
 # Example
 
-To initialise a new package called `mypkg` use:
+To initialize a new package called `mypkg` use:
 
 ```{r eval=FALSE}
 library(IQSSdevtools)
