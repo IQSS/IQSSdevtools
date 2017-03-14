@@ -22,7 +22,7 @@
 #'                   author_name = "'Yoni Ben-Meshulam' <yoni@opower.com>"
 #' }
 #'
-#' @importFrom devtools create use_readme_rmd github_pat use_cran_badge use_news_md use_gpl3_license use_github use_git use_testthat use_travis use_appveyor
+#' @importFrom devtools create use_readme_rmd github_pat use_cran_badge use_news_md use_gpl3_license use_github use_git use_testthat use_travis use_appveyor use_package_doc
 #' @importFrom pkgdown build_site
 #' @md
 #' @export
@@ -48,6 +48,7 @@ init_iqss_package <- function(path,
     ## Set package as working directory ----------------------------------------
     message(sprintf('Changing working directory to: %s.\n', path))
     setwd(path)
+
     ## Include dynamic documentation -------------------------------------------
     message('Initializing components . . .\n')
 
@@ -55,6 +56,9 @@ init_iqss_package <- function(path,
     message('---- dynamic documentation . . .\n')
     use_readme_rmd()
     use_cran_badge()
+
+    # Roxygen template
+    use_package_doc()
 
     ## NEWS
     use_news_md()
