@@ -1,19 +1,20 @@
 Package: IQSSdevtools
-Title: Initialize and Compile Packages Complying with IQSS Best Practices for 
+Title: Initialize and Compile Packages Complying with IQSS Best Practices for
     Software Development and Sustainability
 Version: 0.0.0.9000
 Authors@R: c(
-    person("Christopher", "Gandrud", email = "zelig.zee@gmail.com", 
+    person("Christopher", "Gandrud", email = "zelig.zee@gmail.com",
     role = c("aut", "cre")),
-    person("Institute for Quantitative Social Science", "Harvard University", 
+    person("Institute for Quantitative Social Science", "Harvard University",
     role = "cph")
     )
-Description: The IQSSdevtools package makes it easy to initialize and compile an 
-    R software package that complies with the IQSS Best Practices for Software 
+Description: The IQSSdevtools package makes it easy to initialize and compile an
+    R software package that complies with the IQSS Best Practices for Software
     Development and Sustainability (IBPSDS).
 Depends: R (>= 3.3.3)
 Imports:
     devtools,
+    rmarkdown,
     pkgdown
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
