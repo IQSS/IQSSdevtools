@@ -1,5 +1,5 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/IQSSdevtools)](https://cran.r-project.org/package=IQSSdevtools) [![Travis-CI Build Status](https://travis-ci.org/IQSS/IQSSdevtools.svg?branch=master)](https://travis-ci.org/IQSS/IQSSdevtools) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/IQSS/IQSSdevtools?branch=master&svg=true)](https://ci.appveyor.com/project/IQSS/IQSSdevtools)
+[![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/IQSSdevtools)](https://cran.r-project.org/package=IQSSdevtools) [![Travis-CI Build Status](https://travis-ci.org/IQSS/IQSSdevtools.svg?branch=master)](https://travis-ci.org/IQSS/IQSSdevtools) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/IQSS/IQSSdevtools?branch=master&svg=true)](https://ci.appveyor.com/project/IQSS/IQSSdevtools)
 
 IQSSdevtools
 ============
