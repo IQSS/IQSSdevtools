@@ -4,16 +4,13 @@
 \alias{init_iqss_package}
 \title{Initialize a new R package skeleton using IQSS best practices}
 \usage{
-init_iqss_package(path, author_name, description = getOption("devtools.desc"),
-  use_rstudio = TRUE, github_auth_token = github_pat(), ...)
+init_iqss_package(path, description = getOption("devtools.desc"),
+  use_rstudio = TRUE, github_auth_token = github_pat(),
+  github_protocol = "https", change_wd = TRUE, ...)
 }
 \arguments{
 \item{path}{required character string of the location to create new package.
 The last component of the path will be used as the package name.}
-
-\item{author_name}{required character string listing the primary package
-author's first and last name. Please also include an email address.
-Should be in the format \code{"'Yoni Ben-Meshulam' <yoni@opower.com>"}}
 
 \item{description}{list of DESCRIPTION values to override default values or
 add additional values.}
@@ -27,6 +24,13 @@ add additional values.}
 environment variable. If \code{NULL} then only a local git repo is initialized,
 not a remote GitHub repo.}
 
+\item{github_protocol}{character string specifying the transfer protocol for pushing
+the GitHub remote repository , either \code{"ssh"} (the default) or \code{"https"}.
+Only relevant if \code{github_auth_token} is provided.}
+
+\item{change_wd}{logical whether to change to make the package the working
+directory upon completion.}
+
 \item{...}{arguments to pass to methods.}
 }
 \description{
@@ -34,8 +38,18 @@ Initialize a new R package skeleton using IQSS best practices
 }
 \examples{
 \dontrun{
+# Initialize new package called "mypkg" in the current working directory
 init_iqss_package(path = 'mypkg',
-                  author_name = "'Yoni Ben-Meshulam' <yoni@opower.com>"
+                  description = list("Title" = "A Test IQSS Package",
+                                     "Description" =
+                                     "This is a longer description of the package."))
 }
 
+}
+\seealso{
+\code{\link{create}} \code{\link{use_readme_rmd}}
+\code{\link{github_pat}} \code{\link{use_news_md}}
+\code{\link{use_gpl3_license}} \code{\link{use_github}}
+\code{\link{use_git}} \code{\link{use_testthat}} \code{\link{use_travis}}
+\code{\link{use_appveyor}} \code{\link{use_package_doc}}
 }

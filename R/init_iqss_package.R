@@ -2,9 +2,6 @@
 #'
 #' @param path required character string of the location to create new package.
 #'   The last component of the path will be used as the package name.
-#' @param author_name required character string listing the primary package
-#'   author's first and last name. Please also include an email address.
-#'   Should be in the format `"'Yoni Ben-Meshulam' <yoni@opower.com>"`
 #' @param description list of DESCRIPTION values to override default values or
 #'   add additional values.
 #' @param use_rstudio logical whether to create an Rstudio project file
@@ -14,48 +11,58 @@
 #'  <https://github.com/settings/tokens>. Defaults to the `GITHUB_PAT`
 #'  environment variable. If `NULL` then only a local git repo is initialized,
 #'  not a remote GitHub repo.
+#' @param github_protocol character string specifying the transfer protocol for pushing
+#'  the GitHub remote repository , either `"ssh"` (the default) or `"https"`.
+#'  Only relevant if `github_auth_token` is provided.
+#' @param change_wd logical whether to change to make the package the working
+#'   directory upon completion.
 #' @param ... arguments to pass to methods.
 #'
 #' @examples
 #' \dontrun{
+#' # Initialize new package called "mypkg" in the current working directory
 #' init_iqss_package(path = 'mypkg',
-#'                   author_name = "'Yoni Ben-Meshulam' <yoni@opower.com>"
+#'                   description = list("Title" = "A Test IQSS Package",
+#'                                      "Description" =
+#'                                      "This is a longer description of the package."))
 #' }
 #'
-#' @importFrom devtools create use_readme_rmd github_pat use_cran_badge use_news_md use_gpl3_license use_github use_git use_testthat use_travis use_appveyor use_package_doc
+#' @seealso \code{\link{create}} \code{\link{use_readme_rmd}}
+#' \code{\link{github_pat}} \code{\link{use_news_md}}
+#' \code{\link{use_gpl3_license}} \code{\link{use_github}}
+#' \code{\link{use_git}} \code{\link{use_testthat}} \code{\link{use_travis}}
+#' \code{\link{use_appveyor}} \code{\link{use_package_doc}}
+#' @importFrom devtools create use_readme_rmd github_pat use_news_md
+#' use_gpl3_license use_github use_git use_testthat use_travis use_appveyor
+#' use_package_doc
 #' @importFrom pkgdown build_site
 #' @md
 #' @export
 
 init_iqss_package <- function(path,
-                              author_name,
                               description = getOption("devtools.desc"),
                               use_rstudio = TRUE,
                               github_auth_token = github_pat(),
+                              github_protocol = "https",
+                              change_wd = TRUE,
                               ...)
 {
-    if (missing(author_name) || !is.character(author_name))
-        stop("author_name is required.\nPlease use the format: 'Yoni Ben-Meshulam' <yoni@opower.com>")
-    else
-        if (missing(description)) description <- list()
-        description$Maintainer = author_name
-
+    old_wd <- getwd()
     # init bare package --------------------------------------------------------
     pkg_name <- basename(normalizePath(path, mustWork = FALSE))
     message(sprintf('Initializing %s package . . .\n', pkg_name))
-    devtools::create(path = path, description = description, rstudio = use_rstudio)
+    devtools::create(path = path, description = description,
+                     rstudio = use_rstudio)
 
     ## Set package as working directory ----------------------------------------
-    message(sprintf('Changing working directory to: %s.\n', path))
+    message(sprintf('\nChanging working directory to: %s.\n', path))
     setwd(path)
 
     ## Include dynamic documentation -------------------------------------------
-    message('Initializing components . . .\n')
 
     ## RMarkdown based README
-    message('---- dynamic documentation . . .\n')
+    message('\n---- Dynamic Documentation ----\n')
     use_readme_rmd()
-    use_cran_badge()
 
     # Roxygen template
     use_package_doc()
@@ -64,35 +71,43 @@ init_iqss_package <- function(path,
     use_news_md()
 
     ## Website
+    message('Creating website skeleton')
     pkgdown::build_site()
 
     # LICENSE
-    message('---- GPL-3 License <https://www.gnu.org/licenses/gpl-3.0.en.html>\n')
+    message('\n---- GPL-3 License <https://www.gnu.org/licenses/gpl-3.0.en.html> ----\n')
     use_gpl3_license()
 
     # Version Control ----------------------------------------------------------
-    message('---- version control\n')
-    if (!missing(github_auth_token) || is.null(github_auth_token)) {
+    message('\n---- Version Control ----\n')
+    if (!missing(github_auth_token) || !is.null(github_auth_token)) {
 
-        use_github(auth_token = github_auth_token, ...)
+        use_github(auth_token = github_auth_token, protocol = github_protocol,
+                   ...)
     }
     else {
-        message("Initializing local git repo.\n  Please use a remote git service such as GitHub (<https://help.github.com/articles/adding-a-remote/>) to store and collaborate on your package's source code.")
+        message("Initializing local git repo.\n\nPlease use a remote git service such as GitHub (<https://help.github.com/articles/adding-a-remote/>) to store and collaborate on your package's source code.\n")
         use_git()
     }
 
     # Include testing infrastructure -------------------------------------------
     ## testthat
-    message('---- testing infrastucture:\n')
+    message('\n---- Testing Infrastucture ----\n')
     use_testthat()
 
     ## continuous CI
-    message('           Travis CI (for Linux/MacOS testing)\n')
+    message('\n           ---- Travis CI (for Linux/MacOS testing) ----\n')
     use_travis()
-    message('           Appveyor (for Windows testing)\n')
+    message('           ---- Appveyor (for Windows testing) ----\n')
     use_appveyor()
 
     # Finalise -----------------------------------------------------------------
-    message(sprintf('%s package skeleton has been build.\nPlease see [GET] for next steps.',
+    message('\n---- Finalizing init ----\n')
+    if (change_wd)
+        message(sprintf('\nChanging working directory to: %s.\n', path))
+    else
+        setwd(old_wd)
+
+        message(sprintf('%s package skeleton has been initialized. Please see [GET] for next steps.',
         pkg_name))
 }

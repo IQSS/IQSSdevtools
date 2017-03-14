@@ -5,10 +5,14 @@
 \title{Build an IQSS Best Practices compliant package, including dynamically
 generating documentation and running tests}
 \usage{
-build_iqss_package(path = ".")
+build_iqss_package(path = ".", readme = TRUE, website = TRUE)
 }
 \arguments{
-\item{path}{character string of the package path}
+\item{path}{character string of the package path.}
+
+\item{readme}{logical whether or not to render the READEM.Rmd.}
+
+\item{website}{logical whether or not to render the package website.}
 }
 \description{
 Build an IQSS Best Practices compliant package, including dynamically
