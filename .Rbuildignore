@@ -4,3 +4,5 @@
 ^README-.*\.png$
 ^\.travis\.yml$
 ^appveyor\.yml$
+^\.iqss_bestpractices\.yml$
+^\.iqss_reportcard\.yml$

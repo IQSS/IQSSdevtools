@@ -1,0 +1,41 @@
+---
+title: "Quickstart IQSS Best Practices"
+author: "Christopher Gandrud"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quickstart IQSS Best Practices}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+So you want to start an R package that follows IQSS's Best Practices for Software
+Development and Sustainability? The best practices has the following components:
+
+**In Development**
+
+- **Informative documentation** so users can get started quickly and dig into the package's details. A statistical software package should not be mysterious.
+
+- **Tests** to let you know as soon as possible if there is a bug in your code.
+
+- **Open source license** so that the software can be freely shared and contributed to.
+
+- **Verson controlled development** so that development is reproducible, attributable, and reversible.
+
+- **Public source code hosting** so that others can watch and contribute to the package's development.
+
+- **Automated environment for software build**
+
+- **Citation** information that includes location, authors, ...
+
+# Tools
+
+**IQSSdevtools**' `init_iqss_package` makes it easy build the best practices into your package from the very beginning of its development.
+
+That being said, you will need a reasonably good handle on three sets of tools to be able to fully implement the best practices:
+
+- [rmarkdown](http://rmarkdown.rstudio.com/) + [roxygen2](https://cran.r-project.org/web/packages/roxygen2/README.html) for creating dynamic documentation
+
+- [testthat](http://r-pkgs.had.co.nz/tests.html) for unit testing
+
+- [Git]()/[GitHub](https://github.com/) for version control and public source code hosting

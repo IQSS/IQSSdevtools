@@ -12,11 +12,15 @@ The package will contains the following functions:
 
 -   `init_iqss_package`: initialize a new IQSS Best Practices for Software Development and Sustainability compliant package {MINIMALLY WORKING EXAMPLE}
 
+-   `check_best_practices`: checks to what extent a package follows the minimal best practices.
+
 -   `add_iqss_package`: identify and add (when possible) missing Best Practice compliant elements to an existing R package {IN DEVELOPMENT}
 
 -   `build_iqss_package`: builds and tests IQSS Best Practice elements in an R package {IN DEVELOPMENT}
 
--   `iqss_lintr`: lints package source code using IQSS R Style Guide {GUIDE and FUNCTION IN DEVELOPMEN}
+-   `iqss_lintr`: lints package source code using IQSS R Style Guide {GUIDE and FUNCTION IN DEVELOPMENT}
+
+-   `publish_package`: {GUIDE and FUNCTION IN DEVELOPMENT}
 
 IQSS Best Practices for R Language Software Development and Sustainability
 ==========================================================================
@@ -31,7 +35,7 @@ IQSS Best Practices for R Language Software Development and Sustainability
 
 -   **Version Control**: Sets up [git](https://git-scm.com/) version control.
 
--   **Source Code Hosting**: If a GitHub authentication token is provided with the `github_auth_token` argument, a new [GitHub](https://github.com/) remote repository is created for the package.
+-   **Public Source Code Hosting**: If a GitHub authentication token is provided with the `github_auth_token` argument, a new [GitHub](https://github.com/) remote repository is created for the package.
 
 -   **Testing**: Sets up the infrastructure for [unit testing](https://en.wikipedia.org/wiki/Unit_testing) with the [testthat](https://CRAN.R-project.org/package=testthat) package. The basic foundation for external continuous integration of these unit tests is set up with the [Travis CI](https://travis-ci.org/) and [Appveyor](https://www.appveyor.com/) services to run the tests on Linux and Windows operating systems, respectively.
 
@@ -57,9 +61,52 @@ To initialize a new package called `mypkg` use:
 ``` r
 library(IQSSdevtools)
 
-init_iqss_package(path = 'mypkg', 
+init_iqss_package(path = 'mypkg',
                     description = list("Title" = "A Test IQSS Package")
                   )
+```
+
+To check the extent to which a package follows the best practices:
+
+``` r
+check_best_practices()
+## 
+## Surveying IQSSdevtools. . .
+## * checking documentation . . .
+## * checking license . . .
+## * checking version control . . .
+## * checking tests . . .
+##  ---- running CRAN check ----
+##  ---- calculating test coverage ----
+## 
+## Survey results for IQSSdevtools:
+## ---------------------------------------
+## Documentation:
+##   readme: yes
+##   news: yes
+##   vignettes: yes
+##   pkgdown_website: no
+##   bugreports: yes
+## License:
+##   gpl3_license: yes
+## Version_Control:
+##   git: yes
+##   github: yes
+## Testing:
+##   uses_testthat: no
+##   uses_travis: yes
+##   uses_appveyor: yes
+##   no_check_warnings: yes
+##   no_check_errors: yes
+##   no_check_notes: yes
+##   test_coverage: 0.0e+00
+## Background:
+##   package_name: IQSSdevtools
+##   package_version: 0.0.0.9000
+##   check_time: 2017-03-15 18:20:16
+## 
+## Saving results into .iqss_reportcard.yml
+## * Adding .iqss_reportcard.yml to .Rbuildignore
 ```
 
 Relationship with `devtools`

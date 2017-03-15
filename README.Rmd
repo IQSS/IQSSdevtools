@@ -9,8 +9,7 @@ output:
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.path = "README-"
+  fig.path = "man/figures/"
 )
 ```
 
@@ -32,14 +31,19 @@ The package will contains the following functions:
 - `init_iqss_package`: initialize a new IQSS Best Practices for Software
 Development and Sustainability compliant package {MINIMALLY WORKING EXAMPLE}
 
-- `add_iqss_package`: identify and add (when possible) missing Best 
+- `check_best_practices`: checks to what extent a package follows the minimal
+best practices.
+
+- `add_iqss_package`: identify and add (when possible) missing Best
 Practice compliant elements to an existing R package {IN DEVELOPMENT}
 
 - `build_iqss_package`: builds and tests IQSS Best Practice elements in an R
 package {IN DEVELOPMENT}
 
-- `iqss_lintr`: lints package source code using IQSS R Style Guide 
-{GUIDE and FUNCTION IN DEVELOPMEN}
+- `iqss_lintr`: lints package source code using IQSS R Style Guide
+{GUIDE and FUNCTION IN DEVELOPMENT}
+
+- `publish_package`: {GUIDE and FUNCTION IN DEVELOPMENT}
 
 
 # IQSS Best Practices for R Language Software Development and Sustainability
@@ -60,7 +64,7 @@ include a dynamically generated "quick-start" example. `init_iqss_package` also 
 
 - **Version Control**: Sets up [git](https://git-scm.com/) version control.
 
-- **Source Code Hosting**: If a GitHub authentication token is provided
+- **Public Source Code Hosting**: If a GitHub authentication token is provided
 with the `github_auth_token` argument, a new [GitHub](https://github.com/) remote repository is created for the package.
 
 - **Testing**: Sets up the infrastructure for [unit testing](https://en.wikipedia.org/wiki/Unit_testing) with the
@@ -86,12 +90,22 @@ install_github('IQSS/IQSSdevtools')
 
 To initialize a new package called `mypkg` use:
 
+```{r include=FALSE} 
+library(IQSSdevtools)
+```
+
 ```{r eval=FALSE}
 library(IQSSdevtools)
 
-init_iqss_package(path = 'mypkg', 
+init_iqss_package(path = 'mypkg',
                     description = list("Title" = "A Test IQSS Package")
                   )
+```
+
+To check the extent to which a package follows the best practices:
+
+```{r}
+check_best_practices()
 ```
 
 # Relationship with `devtools`
