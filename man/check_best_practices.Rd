@@ -5,7 +5,8 @@
 \title{Check if a package complies with the skeleton IQSS Best Practices}
 \usage{
 check_best_practices(path = ".", save_results = TRUE,
-  report_results = TRUE, list_results = FALSE)
+  report_results = TRUE, list_results = FALSE, run_cran_check = TRUE,
+  calculate_coverage = TRUE)
 }
 \arguments{
 \item{path}{character string of the package path.}
@@ -18,9 +19,25 @@ check in the package directory in a YAML file called
 console.}
 
 \item{list_results}{logical whether or not to return the results as a list.}
+
+\item{run_cran_check}{logical whether or not to run CRAN check.}
+
+\item{calculate_coverage}{logical whether or not to calculate test coverage.}
+}
+\value{
+By default the function retuns a summary of the check check to
+the console and a YAML formatted file called \code{.iqss_reportcard.yml} to the
+package directory.It also updates the \code{.Rbuildignore} file so that it will
+not conflict with the package build.
+A list can also be returned with \code{list_results = TRUE}.
 }
 \description{
 Check if a package complies with the skeleton IQSS Best Practices
+}
+\details{
+Checks whether an R package is compliant with the \emph{minimal}
+standards set out in the IQSS Best Practices for Software Development and
+Sustainability.
 }
 \examples{
 \dontrun{

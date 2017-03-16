@@ -3,9 +3,9 @@
  Documentation:
   readme: yes
   news: yes
+  bugreports: yes
   vignettes: yes
   pkgdown_website: no
-  bugreports: yes
 License:
   gpl3_license: yes
 Version_Control:
@@ -22,4 +22,5 @@ Testing:
 Background:
   package_name: IQSSdevtools
   package_version: 0.0.0.9000
-  check_time: 2017-03-15 18:20:16
+  package_commit_sha: d0812f01472fe77597238ab65a7e13801f320f34
+  check_time: 2017-03-16 08:42:59
