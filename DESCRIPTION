@@ -13,7 +13,6 @@ Description: The IQSSdevtools package makes it easy to initialize and compile an
     R software package that complies with the IQSS Best Practices for Software
     Development and Sustainability (IBPSDS).
 BugReports: https://github.com/IQSS/IQSSdevtools/issues
-Depends: R (>= 3.3.3)
 Imports:
     covr,
     devtools,
