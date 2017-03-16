@@ -87,11 +87,18 @@ check_best_practices <- function(path = ".",
 
     if (run_cran_check) {
         message(' ---- running CRAN check ----')
-        cran_check_results <- suppressMessages(devtools::check(
-                                                pkg$path, quiet = TRUE))
-        bp_list$Testing$no_check_warnings <- length(cran_check_results$warnings) == 0
-        bp_list$Testing$no_check_errors <- length(cran_check_results$errors) == 0
-        bp_list$Testing$no_check_notes <- length(cran_check_results$notes) == 0
+        cran_check_results <- try(suppressMessages(devtools::check(
+                                                pkg$path, quiet = TRUE)),
+                                  silent = TRUE)
+        if ('try-error' %in% class(cran_check_results)) {
+            bp_list$Testing$build_cran$completed <- FALSE
+        }
+        else {
+            bp_list$Testing$build_cran$completed <- TRUE
+            bp_list$Testing$build_cran$no_check_warnings <- length(cran_check_results$warnings) == 0
+            bp_list$Testing$build_cran$no_check_errors <- length(cran_check_results$errors) == 0
+            bp_list$Testing$build_cran$no_check_notes <- length(cran_check_results$notes) == 0
+        }
     }
     else {
         bp_list$Testing$no_check_warnings <- NULL
@@ -137,7 +144,7 @@ check_best_practices <- function(path = ".",
 
         cat(create_msg, '\n\n', bp_yml, file = yml_path)
         use_build_ignore(files = yml_name, pkg = pkg$path)
-        message(sprintf('* Adding %s to .Rbuildignore', yml_name))
+        message(sprintf('* Adding %s to .Rbuildignore\n', yml_name))
     }
     if (list_results) return(bp_list)
 }
