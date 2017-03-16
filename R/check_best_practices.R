@@ -68,7 +68,9 @@ check_best_practices <- function(path = ".",
 
     message('* checking license . . .')
     if ('license' %in% names(pkg))
-        bp_list$License$gpl3_license <- grepl('GPL-3', pkg$license)
+        bp_list$License$gpl3_license <- gsub(' ', '', pkg$license) %in%
+                                        c('GPL-3', 'GPL-3+fileLICENSE',
+                                        'GPL(>=3)')
     else
         bp_list$License$gpl3_license <- FALSE
 
@@ -100,7 +102,7 @@ check_best_practices <- function(path = ".",
     if (calculate_coverage) {
         message(' ---- calculating test coverage ----')
         coverage <- percent_coverage(package_coverage(pkg$path, type = 'all'))
-        bp_list$Testing$test_coverage <- round(coverage)
+        bp_list$Testing$test_coverage <- as.integer(coverage)
     }
     else
         bp_list$Testing$test_coverage <- NULL

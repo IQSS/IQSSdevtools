@@ -15,12 +15,8 @@ Testing:
   uses_testthat: no
   uses_travis: yes
   uses_appveyor: yes
-  no_check_warnings: yes
-  no_check_errors: yes
-  no_check_notes: yes
-  test_coverage: 0.0e+00
 Background:
   package_name: IQSSdevtools
   package_version: 0.0.0.9000
-  package_commit_sha: d0812f01472fe77597238ab65a7e13801f320f34
-  check_time: 2017-03-16 08:42:59
+  package_commit_sha: 04b02b92acc23f8e64bf974c0e0085f6c1bdf3ea
+  check_time: 2017-03-16 13:09:14
