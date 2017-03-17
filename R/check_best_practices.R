@@ -123,7 +123,10 @@ check_best_practices <- function(path = ".",
     }
     else
         bp_list$Background$commit <- NULL
+    iqssdevtools_version <- as.character(paste(packageVersion("IQSSdevtools")))
+    bp_list$Background$iqssdevtools_version <- iqssdevtools_version
     bp_list$Background$check_time <- as.character(Sys.time())
+
 
     # Results ------------------------------------------------------------------
     bp_yml <- as.yaml(bp_list)
@@ -138,7 +141,6 @@ check_best_practices <- function(path = ".",
         message(sprintf('\nSaving results into %s', yml_name))
 
         if (yml_name %in% pkg_files) file.remove(yml_path)
-        iqssdevtools_version <- packageVersion("IQSSdevtools")
         create_msg <- sprintf('# Created by IQSSdevtools (%s). Do not edit by hand.',
                               iqssdevtools_version)
 

@@ -84,9 +84,9 @@ check_best_practices()
 ## Documentation:
 ##   readme: yes
 ##   news: yes
+##   bugreports: yes
 ##   vignettes: yes
 ##   pkgdown_website: no
-##   bugreports: yes
 ## License:
 ##   gpl3_license: yes
 ## Version_Control:
@@ -96,14 +96,18 @@ check_best_practices()
 ##   uses_testthat: no
 ##   uses_travis: yes
 ##   uses_appveyor: yes
-##   no_check_warnings: yes
-##   no_check_errors: yes
-##   no_check_notes: yes
-##   test_coverage: 0.0e+00
+##   build_cran:
+##     completed: yes
+##     no_check_warnings: yes
+##     no_check_errors: yes
+##     no_check_notes: yes
+##   test_coverage: 0
 ## Background:
 ##   package_name: IQSSdevtools
 ##   package_version: 0.0.0.9000
-##   check_time: 2017-03-15 18:20:16
+##   package_commit_sha: 570f91985a87e982589d200fadef31b85687c400
+##   iqssdevtools_version: 0.0.0.9000
+##   check_time: 2017-03-17 09:43:09
 ## 
 ## Saving results into .iqss_reportcard.yml
 ## * Adding .iqss_reportcard.yml to .Rbuildignore
