@@ -15,8 +15,8 @@ Testing:
   uses_testthat: no
   uses_travis: yes
   uses_appveyor: yes
-  build_cran:
-    completed: yes
+  build_check:
+    build_check_completed: yes
     no_check_warnings: yes
     no_check_errors: yes
     no_check_notes: yes
@@ -24,6 +24,6 @@ Testing:
 Background:
   package_name: IQSSdevtools
   package_version: 0.0.0.9000
-  package_commit_sha: 570f91985a87e982589d200fadef31b85687c400
+  package_commit_sha: a6cf1455924dc7d1c4f2fe48a8cd103198568b2b
   iqssdevtools_version: 0.0.0.9000
-  check_time: 2017-03-17 09:43:09
+  check_time: 2017-03-17 16:08:30

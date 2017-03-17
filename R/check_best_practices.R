@@ -87,23 +87,23 @@ check_best_practices <- function(path = ".",
 
     if (run_cran_check) {
         message(' ---- running CRAN check ----')
-        cran_check_results <- try(suppressMessages(devtools::check(
+        build_check_results <- try(suppressMessages(devtools::check(
                                                 pkg$path, quiet = TRUE)),
                                   silent = TRUE)
-        if ('try-error' %in% class(cran_check_results)) {
-            bp_list$Testing$build_cran$completed <- FALSE
+        if ('try-error' %in% class(build_check_results)) {
+            bp_list$Testing$build_check$completed <- FALSE
         }
         else {
-            bp_list$Testing$build_cran$completed <- TRUE
-            bp_list$Testing$build_cran$no_check_warnings <- length(cran_check_results$warnings) == 0
-            bp_list$Testing$build_cran$no_check_errors <- length(cran_check_results$errors) == 0
-            bp_list$Testing$build_cran$no_check_notes <- length(cran_check_results$notes) == 0
+            bp_list$Testing$build_check$build_check_completed <- TRUE
+            bp_list$Testing$build_check$no_check_warnings <- length(build_check_results$warnings) == 0
+            bp_list$Testing$build_check$no_check_errors <- length(build_check_results$errors) == 0
+            bp_list$Testing$build_check$no_check_notes <- length(build_check_results$notes) == 0
         }
     }
     else {
-        bp_list$Testing$no_check_warnings <- NULL
-        bp_list$Testing$no_check_errors <- NULL
-        bp_list$Testing$no_check_notes <- NULL
+        bp_list$Testing$build_check$no_check_warnings <- NULL
+        bp_list$Testing$build_check$no_check_errors <- NULL
+        bp_list$Testing$build_check$no_check_notes <- NULL
     }
 
     if (calculate_coverage) {
