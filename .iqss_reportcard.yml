@@ -27,7 +27,7 @@ Background:
   package_name: IQSSdevtools
   package_version: 0.0.0.9000
   package_language: R
-  package_commit_sha: 897e27d3335efa12f26ed8aa7ddd421a344d79da
+  package_commit_sha: 86f407a21e0ff97283d49eb409924d028dc1e0f5
   iqss_bestpractices_version: 0.0.0.9000
   iqssdevtools_version: 0.0.0.9000
-  check_time: 2017-03-29 11:25:35
+  check_time: 2017-03-29 11:39:01

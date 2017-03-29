@@ -23,8 +23,8 @@ knitr::opts_chunk$set(
 **This package is in the early stages of development**
 
 The goal of **IQSSdevtools** is to makes it easy to initialize and compile an
-R software package that complies with the IQSS Best Practices for Software
-Development and Sustainability (IBPSDS).
+R software package that complies with the [IQSS Best Practices for Software
+Development and Sustainability (IBPSDS)](https://github.com/IQSS/social_science_software_toolkit/blob/master/iqss_sss_best_practices.md).
 
 The package will contain the following functions:
 

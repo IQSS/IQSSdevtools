@@ -6,7 +6,7 @@ IQSSdevtools
 
 **This package is in the early stages of development**
 
-The goal of **IQSSdevtools** is to makes it easy to initialize and compile an R software package that complies with the IQSS Best Practices for Software Development and Sustainability (IBPSDS).
+The goal of **IQSSdevtools** is to makes it easy to initialize and compile an R software package that complies with the [IQSS Best Practices for Software Development and Sustainability (IBPSDS)](https://github.com/IQSS/social_science_software_toolkit/blob/master/iqss_sss_best_practices.md).
 
 The package will contain the following functions:
 
@@ -110,10 +110,10 @@ check_best_practices()
 ##   package_name: IQSSdevtools
 ##   package_version: 0.0.0.9000
 ##   package_language: R
-##   package_commit_sha: 897e27d3335efa12f26ed8aa7ddd421a344d79da
+##   package_commit_sha: 86f407a21e0ff97283d49eb409924d028dc1e0f5
 ##   iqss_bestpractices_version: 0.0.0.9000
 ##   iqssdevtools_version: 0.0.0.9000
-##   check_time: 2017-03-29 11:25:35
+##   check_time: 2017-03-29 11:39:01
 ## 
 ## Saving results into .iqss_reportcard.yml
 ## * Adding .iqss_reportcard.yml to .Rbuildignore
