@@ -14,8 +14,8 @@
 #' standards set out in the IQSS Best Practices for Software Development and
 #' Sustainability.
 #'
-#' @return By default the function retuns a summary of the check check to
-#' the console and a YAML formatted file called `.iqss_reportcard.yml` to the
+#' @return By default the function retuns a summary of the best practices check
+#' to the console and a YAML formatted file called `.iqss_reportcard.yml` to the
 #' package directory.It also updates the `.Rbuildignore` file so that it will
 #' not conflict with the package build.
 #' A list can also be returned with `list_results = TRUE`.
@@ -24,6 +24,9 @@
 #' \dontrun{
 #' check_best_practices()
 #' }
+#'
+#' @seealso The IQSS Report Card Spec can be found at:
+#' <https://github.com/IQSS/social_science_software_toolkit/blob/master/report_card/iqss_report_card_spec.md>
 #'
 #' @importFrom covr package_coverage percent_coverage
 #' @importFrom devtools as.package check use_build_ignore
@@ -117,6 +120,7 @@ check_best_practices <- function(path = ".",
     # Meta ---------------------------------------------------------------------
     bp_list$Background$package_name <- pkg$package
     bp_list$Background$package_version <- pkg$version
+    bp_list$Background$package_language <- "R"
     if(bp_list$Version_Control$git) {
         most_recent_commit <- commits(repository(pkg$path))[[1]]
         bp_list$Background$package_commit_sha <- most_recent_commit@sha
@@ -124,6 +128,7 @@ check_best_practices <- function(path = ".",
     else
         bp_list$Background$commit <- NULL
     iqssdevtools_version <- as.character(paste(packageVersion("IQSSdevtools")))
+    bp_list$Background$iqss_bestpractices_version <- "0.0.0.9000"
     bp_list$Background$iqssdevtools_version <- iqssdevtools_version
     bp_list$Background$check_time <- as.character(Sys.time())
 

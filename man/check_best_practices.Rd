@@ -25,8 +25,8 @@ console.}
 \item{calculate_coverage}{logical whether or not to calculate test coverage.}
 }
 \value{
-By default the function retuns a summary of the check check to
-the console and a YAML formatted file called \code{.iqss_reportcard.yml} to the
+By default the function retuns a summary of the best practices check
+to the console and a YAML formatted file called \code{.iqss_reportcard.yml} to the
 package directory.It also updates the \code{.Rbuildignore} file so that it will
 not conflict with the package build.
 A list can also be returned with \code{list_results = TRUE}.
@@ -44,4 +44,8 @@ Sustainability.
 check_best_practices()
 }
 
+}
+\seealso{
+The IQSS Report Card Spec can be found at:
+\url{https://github.com/IQSS/social_science_software_toolkit/blob/master/report_card/iqss_report_card_spec.md}
 }
