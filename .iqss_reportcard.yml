@@ -2,10 +2,12 @@
 
  Documentation:
   readme: yes
+  roxygen: yes
   news: yes
   bugreports: yes
   vignettes: yes
-  pkgdown_website: no
+  website:
+    pkgdown_website: no
 License:
   gpl3_license: yes
 Version_Control:
@@ -24,6 +26,8 @@ Testing:
 Background:
   package_name: IQSSdevtools
   package_version: 0.0.0.9000
-  package_commit_sha: a6cf1455924dc7d1c4f2fe48a8cd103198568b2b
+  package_language: R
+  package_commit_sha: 897e27d3335efa12f26ed8aa7ddd421a344d79da
+  iqss_bestpractices_version: 0.0.0.9000
   iqssdevtools_version: 0.0.0.9000
-  check_time: 2017-03-17 16:08:30
+  check_time: 2017-03-29 11:25:35

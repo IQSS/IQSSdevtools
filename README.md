@@ -8,13 +8,15 @@ IQSSdevtools
 
 The goal of **IQSSdevtools** is to makes it easy to initialize and compile an R software package that complies with the IQSS Best Practices for Software Development and Sustainability (IBPSDS).
 
-The package will contains the following functions:
+The package will contain the following functions:
 
 -   `init_iqss_package`: initialize a new IQSS Best Practices for Software Development and Sustainability compliant package {MINIMALLY WORKING EXAMPLE}
 
 -   `check_best_practices`: checks to what extent a package follows the minimal best practices.
 
 -   `add_iqss_package`: identify and add (when possible) missing Best Practice compliant elements to an existing R package {IN DEVELOPMENT}
+
+    -   `add_test_suit`: add just a test suite, including files needed for continuous integration.
 
 -   `build_iqss_package`: builds and tests IQSS Best Practice elements in an R package {IN DEVELOPMENT}
 
@@ -83,10 +85,12 @@ check_best_practices()
 ## ---------------------------------------
 ## Documentation:
 ##   readme: yes
+##   roxygen: yes
 ##   news: yes
 ##   bugreports: yes
 ##   vignettes: yes
-##   pkgdown_website: no
+##   website:
+##     pkgdown_website: no
 ## License:
 ##   gpl3_license: yes
 ## Version_Control:
@@ -96,8 +100,8 @@ check_best_practices()
 ##   uses_testthat: no
 ##   uses_travis: yes
 ##   uses_appveyor: yes
-##   build_cran:
-##     completed: yes
+##   build_check:
+##     build_check_completed: yes
 ##     no_check_warnings: yes
 ##     no_check_errors: yes
 ##     no_check_notes: yes
@@ -105,9 +109,11 @@ check_best_practices()
 ## Background:
 ##   package_name: IQSSdevtools
 ##   package_version: 0.0.0.9000
-##   package_commit_sha: 570f91985a87e982589d200fadef31b85687c400
+##   package_language: R
+##   package_commit_sha: 897e27d3335efa12f26ed8aa7ddd421a344d79da
+##   iqss_bestpractices_version: 0.0.0.9000
 ##   iqssdevtools_version: 0.0.0.9000
-##   check_time: 2017-03-17 09:43:09
+##   check_time: 2017-03-29 11:25:35
 ## 
 ## Saving results into .iqss_reportcard.yml
 ## * Adding .iqss_reportcard.yml to .Rbuildignore

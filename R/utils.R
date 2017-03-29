@@ -10,13 +10,13 @@
 #'
 #' @examples
 #' \dontrun{
-#' init_test_suite(pkg = 'mypackage')
+#' add_test_suite(pkg = 'mypackage')
 #' }
 #'
 #' @importFrom devtools use_testthat use_travis use_appveyor
 #' @export
 
-init_test_suite <- function(pkg = ".", use_travis = TRUE,
+add_test_suite <- function(pkg = ".", use_travis = TRUE,
                             use_appveyor = TRUE, ...) {
     # testing suite
     use_testthat(pkg = pkg, ...)

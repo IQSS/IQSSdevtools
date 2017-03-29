@@ -26,7 +26,7 @@ The goal of **IQSSdevtools** is to makes it easy to initialize and compile an
 R software package that complies with the IQSS Best Practices for Software
 Development and Sustainability (IBPSDS).
 
-The package will contains the following functions:
+The package will contain the following functions:
 
 - `init_iqss_package`: initialize a new IQSS Best Practices for Software
 Development and Sustainability compliant package {MINIMALLY WORKING EXAMPLE}
@@ -36,6 +36,9 @@ best practices.
 
 - `add_iqss_package`: identify and add (when possible) missing Best
 Practice compliant elements to an existing R package {IN DEVELOPMENT}
+
+    - `add_test_suit`: add just a test suite, including files needed for 
+continuous integration.
 
 - `build_iqss_package`: builds and tests IQSS Best Practice elements in an R
 package {IN DEVELOPMENT}

@@ -53,7 +53,7 @@ check_best_practices <- function(path = ".",
     message('* checking documentation . . .')
     bp_list$Documentation$readme <- 'README.Rmd' %in% pkg_files
 
-    #bp_list$roxygen <-
+    bp_list$Documentation$roxygen <- 'roxygen' %in% names(pkg)
 
     bp_list$Documentation$news <- 'NEWS.md' %in% pkg_files
 
@@ -63,11 +63,11 @@ check_best_practices <- function(path = ".",
 
     if ('docs' %in% pkg_files) {
         doc_files <- list.files(sprintf('%s/docs', pkg$path))
-        bp_list$Documentation$pkgdown_website <- 'docs/index.html' %in%
+        bp_list$Documentation$website$pkgdown_website <- 'docs/index.html' %in%
                                                     doc_files
     }
     else
-        bp_list$Documentation$pkgdown_website <- FALSE
+        bp_list$Documentation$website$pkgdown_website <- FALSE
 
     message('* checking license . . .')
     if ('license' %in% names(pkg))

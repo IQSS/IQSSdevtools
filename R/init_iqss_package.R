@@ -120,7 +120,7 @@ init_iqss_package <- function(path,
     # Include testing infrastructure -------------------------------------------
     if (use_tests) {
         message('\n\n---- Testing Infrastucture ----\n')
-        init_test_suite(...)
+        add_test_suite(...)
     }
     else warning('\n*** No test suite initialized ***\n', call. = FALSE)
 
