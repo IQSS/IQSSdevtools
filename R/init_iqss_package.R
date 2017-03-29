@@ -1,12 +1,18 @@
 #' Initialize a new R package skeleton using IQSS best practices
 #'
-#' @param path required character string of the location to create new package.
+#' @param path character string of the location to create new package.
 #'   The last component of the path will be used as the package name.
 #' @param description list of DESCRIPTION values to override default values or
 #'   add additional values.
 #' @param use_rstudio logical whether to create an Rstudio project file
 #'   <https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects>
 #'   (with \code{\link{use_rstudio}})?
+#' @param use_pkgdown logical whether or not to initialize a pkgdown website
+#'   for documenting the package.
+#' @param use_gpl3 logical whether or not to include a GPL 3 license.
+#' @param use_tests logical whether or not to initialize a test suite with the
+#'   testthat package and continuous integration with Travis CI (for Linux and
+#'   macOS) and Appveyor (for Windows).
 #' @param github_auth_token Provide a personal access token (PAT) from
 #'  <https://github.com/settings/tokens>. Defaults to the `GITHUB_PAT`
 #'  environment variable. If `NULL` then only a local git repo is initialized,
@@ -31,7 +37,8 @@
 #' \code{\link{github_pat}} \code{\link{use_news_md}}
 #' \code{\link{use_gpl3_license}} \code{\link{use_github}}
 #' \code{\link{use_git}} \code{\link{use_testthat}} \code{\link{use_travis}}
-#' \code{\link{use_appveyor}} \code{\link{use_package_doc}}
+#' \code{\link{use_appveyor}} \code{\link{use_package_doc}},
+#' \code{\link{build_site}}
 #' @importFrom devtools create use_readme_rmd github_pat use_news_md
 #' use_gpl3_license use_github use_git use_testthat use_travis use_appveyor
 #' use_package_doc
@@ -42,15 +49,22 @@
 init_iqss_package <- function(path,
                               description = getOption("devtools.desc"),
                               use_rstudio = TRUE,
+                              use_pkgdown = TRUE,
+                              use_gpl3 = TRUE,
+                              use_tests = TRUE,
                               github_auth_token = github_pat(),
                               github_protocol = "https",
                               change_wd = TRUE,
                               ...)
 {
+    if (missing(path))
+        stop('path is required to for initializing a new package.',
+             call. = FALSE)
+
     old_wd <- getwd()
     # init bare package --------------------------------------------------------
     pkg_name <- basename(normalizePath(path, mustWork = FALSE))
-    message(sprintf('Initializing %s package . . .\n', pkg_name))
+    message(sprintf('\nInitializing %s package . . .\n', pkg_name))
     devtools::create(path = path, description = description,
                      rstudio = use_rstudio)
 
@@ -61,25 +75,38 @@ init_iqss_package <- function(path,
     ## Include dynamic documentation -------------------------------------------
 
     ## RMarkdown based README
-    message('\n---- Dynamic Documentation ----\n')
+    message('\n\n---- Dynamic Documentation ----\n')
     use_readme_rmd()
+
+    cat('\n')
 
     # Roxygen template
     use_package_doc()
 
+    cat('\n')
+
     ## NEWS
     use_news_md()
 
+    cat('\n')
+
     ## Website
-    message('Creating website skeleton')
-    pkgdown::build_site()
+    if (use_pkgdown) {
+        message('Creating website skeleton')
+        pkgdown::build_site()
+    }
+    else warning('\n*** No package website initialized ***\n', call. = FALSE)
 
     # LICENSE
-    message('\n---- GPL-3 License <https://www.gnu.org/licenses/gpl-3.0.en.html> ----\n')
-    use_gpl3_license()
+    if (use_gpl3) {
+        message('\n\n---- GPL-3 License <https://www.gnu.org/licenses/gpl-3.0.en.html> ----\n')
+        use_gpl3_license()
+    }
+    else warning('\n*** No LICENSE included ***\n', call. = FALSE)
+
 
     # Version Control ----------------------------------------------------------
-    message('\n---- Version Control ----\n')
+    message('\n\n---- Version Control ----\n')
     if (!missing(github_auth_token) || !is.null(github_auth_token)) {
 
         use_github(auth_token = github_auth_token, protocol = github_protocol,
@@ -91,23 +118,21 @@ init_iqss_package <- function(path,
     }
 
     # Include testing infrastructure -------------------------------------------
-    ## testthat
-    message('\n---- Testing Infrastucture ----\n')
-    use_testthat()
+    if (use_tests) {
+        message('\n\n---- Testing Infrastucture ----\n')
+        init_test_suite(...)
+    }
+    else warning('\n*** No test suite initialized ***\n', call. = FALSE)
 
-    ## continuous CI
-    message('\n           ---- Travis CI (for Linux/MacOS testing) ----\n')
-    use_travis()
-    message('           ---- Appveyor (for Windows testing) ----\n')
-    use_appveyor()
 
     # Finalise -----------------------------------------------------------------
-    message('\n---- Finalizing init ----\n')
+    message('\n\n---- Finalizing init ----\n')
     if (change_wd)
         message(sprintf('\nChanging working directory to: %s.\n', path))
     else
         setwd(old_wd)
 
-        message(sprintf('%s package skeleton has been initialized. Please see [GET] for next steps.',
-        pkg_name))
+        message(sprintf(
+                '%s package skeleton has been initialized. Please see [GET] for next steps.\n',
+                pkg_name))
 }

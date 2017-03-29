@@ -5,11 +5,12 @@
 \title{Initialize a new R package skeleton using IQSS best practices}
 \usage{
 init_iqss_package(path, description = getOption("devtools.desc"),
-  use_rstudio = TRUE, github_auth_token = github_pat(),
+  use_rstudio = TRUE, use_pkgdown = TRUE, use_gpl3 = TRUE,
+  use_tests = TRUE, github_auth_token = github_pat(),
   github_protocol = "https", change_wd = TRUE, ...)
 }
 \arguments{
-\item{path}{required character string of the location to create new package.
+\item{path}{character string of the location to create new package.
 The last component of the path will be used as the package name.}
 
 \item{description}{list of DESCRIPTION values to override default values or
@@ -18,6 +19,15 @@ add additional values.}
 \item{use_rstudio}{logical whether to create an Rstudio project file
 \url{https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects}
 (with \code{\link{use_rstudio}})?}
+
+\item{use_pkgdown}{logical whether or not to initialize a pkgdown website
+for documenting the package.}
+
+\item{use_gpl3}{logical whether or not to include a GPL 3 license.}
+
+\item{use_tests}{logical whether or not to initialize a test suite with the
+testthat package and continuous integration with Travis CI (for Linux and
+macOS) and Appveyor (for Windows).}
 
 \item{github_auth_token}{Provide a personal access token (PAT) from
 \url{https://github.com/settings/tokens}. Defaults to the \code{GITHUB_PAT}
@@ -51,5 +61,6 @@ init_iqss_package(path = 'mypkg',
 \code{\link{github_pat}} \code{\link{use_news_md}}
 \code{\link{use_gpl3_license}} \code{\link{use_github}}
 \code{\link{use_git}} \code{\link{use_testthat}} \code{\link{use_travis}}
-\code{\link{use_appveyor}} \code{\link{use_package_doc}}
+\code{\link{use_appveyor}} \code{\link{use_package_doc}},
+\code{\link{build_site}}
 }

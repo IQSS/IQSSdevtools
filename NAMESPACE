@@ -3,6 +3,7 @@
 export(build_iqss_package)
 export(check_best_practices)
 export(init_iqss_package)
+export(init_test_suite)
 importFrom(covr,package_coverage)
 importFrom(covr,percent_coverage)
 importFrom(devtools,as.package)
