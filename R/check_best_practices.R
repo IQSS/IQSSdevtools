@@ -31,6 +31,7 @@
 #' @importFrom covr package_coverage percent_coverage
 #' @importFrom devtools as.package check use_build_ignore
 #' @importFrom git2r commits repository
+#' @importFrom httr GET
 #' @importFrom yaml as.yaml
 #' @importFrom utils packageVersion
 #' @export
@@ -61,6 +62,20 @@ check_best_practices <- function(path = ".",
 
     bp_list$Documentation$vignettes <- 'vignettes' %in% pkg_files
 
+    # openscholar
+    if ('url' %in% names(pkg)) {
+        URL <- pkg$url
+        site <- GET(URL)
+        if ('x-generator' %in% names(site$headers)) {
+            generator <- site$headers$`x-generator`
+            bp_list$Documentation$website$openscholar <- grepl('openscholar',
+                                                generator, ignore.case = TRUE)
+        }
+        else
+            bp_list$Documentation$website$openscholar <- FALSE
+    }
+    else
+        bp_list$Documentation$website$openscholar <- FALSE
     if ('docs' %in% pkg_files) {
         doc_files <- list.files(sprintf('%s/docs', pkg$path))
         bp_list$Documentation$website$pkgdown_website <- 'docs/index.html' %in%

@@ -90,6 +90,7 @@ check_best_practices()
 ##   bugreports: yes
 ##   vignettes: yes
 ##   website:
+##     openscholar: no
 ##     pkgdown_website: no
 ## License:
 ##   gpl3_license: yes
@@ -110,10 +111,10 @@ check_best_practices()
 ##   package_name: IQSSdevtools
 ##   package_version: 0.0.0.9000
 ##   package_language: R
-##   package_commit_sha: 86f407a21e0ff97283d49eb409924d028dc1e0f5
+##   package_commit_sha: 798c70ac6822c583f03523ed85124c8256e71e56
 ##   iqss_bestpractices_version: 0.0.0.9000
 ##   iqssdevtools_version: 0.0.0.9000
-##   check_time: 2017-03-29 11:39:01
+##   check_time: 2017-03-29 11:54:05
 ## 
 ## Saving results into .iqss_reportcard.yml
 ## * Adding .iqss_reportcard.yml to .Rbuildignore

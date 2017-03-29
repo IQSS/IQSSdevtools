@@ -17,6 +17,7 @@ Imports:
     covr,
     devtools,
     git2r,
+    httr,
     rmarkdown,
     pkgdown,
     yaml
