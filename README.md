@@ -105,16 +105,16 @@ check_best_practices()
 ##     build_check_completed: yes
 ##     no_check_warnings: yes
 ##     no_check_errors: yes
-##     no_check_notes: yes
+##     no_check_notes: no
 ##   test_coverage: 0
 ## Background:
 ##   package_name: IQSSdevtools
 ##   package_version: 0.0.0.9000
 ##   package_language: R
-##   package_commit_sha: 798c70ac6822c583f03523ed85124c8256e71e56
+##   package_commit_sha: dcae5a1a5d5fc6515ab978c67fc73f661060479a
 ##   iqss_bestpractices_version: 0.0.0.9000
 ##   iqssdevtools_version: 0.0.0.9000
-##   check_time: 2017-03-29 11:54:05
+##   check_time: 2017-04-05 09:48:08
 ## 
 ## Saving results into .iqss_reportcard.yml
 ## * Adding .iqss_reportcard.yml to .Rbuildignore

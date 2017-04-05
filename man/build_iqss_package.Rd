@@ -5,16 +5,38 @@
 \title{Build an IQSS Best Practices compliant package, including dynamically
 generating documentation and running tests}
 \usage{
-build_iqss_package(path = ".", readme = TRUE, website = TRUE)
+build_iqss_package(path = ".", rdocs = TRUE, rdocs_args = c("rd",
+  "collate", "namespace"), readme = TRUE, website = TRUE, check = TRUE,
+  check_args = "--as-cran", ...)
 }
 \arguments{
 \item{path}{character string of the package path.}
 
+\item{rdocs}{logical whether or not to \code{roxegenize} the R documentation
+and vignettes.}
+
+\item{rdocs_args}{character vector of roclet names to use with package. This
+defaults to \code{NULL}, which will use the \code{roclets} fields in the list
+provided in the Roxygen \code{DESCRIPTION} field. If none are specified,
+defaults to \code{c("collate", "namespace", "rd")}.}
+
 \item{readme}{logical whether or not to render the READEM.Rmd.}
 
 \item{website}{logical whether or not to render the package website.}
+
+\item{check}{logical whether or not to check that the package can build and
+passes all tests.}
+
+\item{check_args}{character vector of additional arguments to pass to
+\code{\link{check}}.}
+
+\item{...}{arguments to pass to methods.}
 }
 \description{
 Build an IQSS Best Practices compliant package, including dynamically
 generating documentation and running tests
+}
+\seealso{
+\code{\link{document}}. \code{\link{render}},
+\code{\link{build_site}}
 }
