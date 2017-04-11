@@ -18,7 +18,6 @@
 #'   Only relevant if `git_commit = TRUE`.
 #' @param push_to_github logical whether or not to push the commits to GitHub.
 #'   Only relevant if `git_commit = TRUE`.
-#' @param
 #' @param ... arguments to pass to methods.
 #'
 #'

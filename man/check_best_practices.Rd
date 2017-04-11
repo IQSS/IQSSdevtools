@@ -2,7 +2,8 @@
 % Please edit documentation in R/check_best_practices.R
 \name{check_best_practices}
 \alias{check_best_practices}
-\title{Check if a package complies with the skeleton IQSS Best Practices}
+\title{Check if a package complies with the skeleton IQSS Best Practices for
+Statistical Software Development}
 \usage{
 check_best_practices(path = ".", save_results = TRUE,
   report_results = TRUE, list_results = FALSE, run_cran_check = TRUE,
@@ -32,7 +33,8 @@ not conflict with the package build.
 A list can also be returned with \code{list_results = TRUE}.
 }
 \description{
-Check if a package complies with the skeleton IQSS Best Practices
+Check if a package complies with the skeleton IQSS Best Practices for
+Statistical Software Development
 }
 \details{
 Checks whether an R package is compliant with the \emph{minimal}

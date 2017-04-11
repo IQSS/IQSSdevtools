@@ -40,9 +40,10 @@
 #' \code{\link{use_appveyor}} \code{\link{use_package_doc}},
 #' \code{\link{build_site}}
 #' @importFrom devtools create use_readme_rmd github_pat use_news_md
-#' use_gpl3_license use_github use_git use_testthat use_travis use_appveyor
+#' use_github use_git use_testthat use_travis use_appveyor
 #' use_package_doc
 #' @importFrom pkgdown build_site
+#' @importFrom usethis use_gpl3_license
 #' @md
 #' @export
 

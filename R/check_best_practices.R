@@ -1,4 +1,5 @@
-#' Check if a package complies with the skeleton IQSS Best Practices
+#' Check if a package complies with the skeleton IQSS Best Practices for
+#' Statistical Software Development
 #'
 #' @param path character string of the package path.
 #' @param save_results logical whether or not to save the results of the
