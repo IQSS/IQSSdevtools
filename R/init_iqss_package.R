@@ -42,7 +42,7 @@
 #' @importFrom devtools create use_readme_rmd github_pat use_news_md
 #' use_github use_git use_testthat use_travis use_appveyor
 #' use_package_doc
-#' @importFrom pkgdown build_site
+#' @importFrom pkgdown init_site
 #' @importFrom usethis use_gpl3_license
 #' @md
 #' @export
@@ -59,8 +59,7 @@ init_iqss_package <- function(path,
                               ...)
 {
     if (missing(path))
-        stop('path is required to for initializing a new package.',
-             call. = FALSE)
+        stop('path is required to initialize a new package.', call. = FALSE)
 
     old_wd <- getwd()
     # init bare package --------------------------------------------------------
@@ -94,7 +93,7 @@ init_iqss_package <- function(path,
     ## Website
     if (use_pkgdown) {
         message('Creating website skeleton')
-        pkgdown::build_site()
+        init_site()
     }
     else warning('\n*** No package website initialized ***\n', call. = FALSE)
 
@@ -134,6 +133,6 @@ init_iqss_package <- function(path,
         setwd(old_wd)
 
         message(sprintf(
-                '%s package skeleton has been initialized. Please see [GET] for next steps.\n',
+                '%s package skeleton has been initialized.\nFor next steps see:\n  https://github.com/IQSS/social_science_software_toolkit/blob/master/best_practices_per_language/r_quickstart_guide.md',
                 pkg_name))
 }
