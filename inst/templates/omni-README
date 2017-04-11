@@ -27,6 +27,22 @@ knitr::opts_knit$set(
 
 # {{{ Package }}}
 
+<!-- BADGES BEGIN -->
+**Release:**
+[![CRAN Version](http://www.r-pkg.org/badges/version/{{{ Package }}})](http://cran.r-project.org/package={{{ Package }}})
+![CRAN Monthly Downloads](http://cranlogs.r-pkg.org/badges/last-month/{{{ Package }}})
+![CRAN Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/{{{ Package }}})
+
+**Development:**
+[![Project Status: Concept - Minimal or no implementation has been done yet.](http://www.repostatus.org/badges/latest/concept.svg)](http://www.repostatus.org/#concept)
+{{#github}}
+[![Travis (LINUX) Build Status](https://travis-ci.org/{{{username}}}/{{{repo}}}.svg?branch=master)](https://travis-ci.org/{{{username}}}/{{{repo}}}Zelig)
+[![AppVeyor (Windows) Build Status](https://ci.appveyor.com/api/projects/status/github/{{{username}}}/{{{repo}}}?branch=master&svg=true)](https://ci.appveyor.com/project/{{{username}}}/{{{repo}}})
+[![codecov](https://codecov.io/gh/{{{username}}}/{{{repo}}}/branch/master/graph/badge.svg)](https://codecov.io/gh/{{{username}}}/{{{repo}}})
+{{/github}}
+<!-- BADGES END -->
+
+
 The aim of {{{ Package }}} is to ...
 
 {{#github}}

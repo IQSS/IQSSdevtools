@@ -25,9 +25,11 @@ add_test_suite <- function(pkg = ".", use_travis = TRUE,
 
     ## continuous CI
     message('\n           ---- Travis CI (for Linux/MacOS testing) ----\n')
-    use_travis(pkg = pkg, ...)
+    suppressMessages(use_travis(pkg = pkg, ...))
+    message("* Creating `.travis.yml` from template.\n* Adding `.travis.yml` to `.Rbuildignore`.\nNext:\n * Turn on travis for this repo at https://travis-ci.org/profile\n")
     message('           ---- Appveyor (for Windows testing) ----\n')
-    use_appveyor(pkg = pkg, ...)
+    suppressMessages(use_appveyor(pkg = pkg, ...))
+    message("* Creating `appveyor.yml` from template.\n* Adding `appveyor.yml` to `.Rbuildignore`.\nNext:\n * Turn on AppVeyor for this repo at https://ci.appveyor.com/projects\n")
 }
 
 
@@ -171,4 +173,30 @@ write_union <- function(path, new_lines, quiet = FALSE)
     }
     all <- union(lines, new_lines)
     writeLines(all, path)
+}
+
+#' Add, commit, and push a repository
+#'
+#' @param path A path to an existing local git repository.
+#' @param commit_msg chracter string commit message.
+#' @param use_github logical whether or not to push the commit to GitHub.
+#'
+#' @importFrom git2r add branches repository commit push
+
+add_commit_push <- function(path = '.', commit_msg, use_github = TRUE) {
+    repo <- repository(path)
+    git2r::add(repo = repo, path ='.')
+    commit(repo = repo, message = commit_msg, all = TRUE)
+    if (use_github) {
+        remote_branch <- try(branches(repo)[[2]], silent = TRUE)
+        if (!("try-error" %in% attr(remote_branch, "class"))) {
+            push_result <- try(push(object = repo), silent = TRUE)
+            if ("try-error" %in% attr(push_result, "class")) {
+                message(sprintf("Unable to push %s to GitHub.\n", commit_msg))
+                error_msg <- "Unable to authenticate with supplied credentials"
+                if (any(grepl(error_msg, attr(push_result, "condition"))))
+                    message('To allow IQSSdevtools to push to your repository, you may need an SSH key added to the ssh-agent.\nSee: https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/')
+            }
+        }
+    }
 }

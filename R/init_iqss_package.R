@@ -13,6 +13,7 @@
 #' @param use_tests logical whether or not to initialize a test suite with the
 #'   testthat package and continuous integration with Travis CI (for Linux and
 #'   macOS) and Appveyor (for Windows).
+#' @param use_git logical whether or not to use git version control.
 #' @param github_auth_token Provide a personal access token (PAT) from
 #'  <https://github.com/settings/tokens>. Defaults to the `GITHUB_PAT`
 #'  environment variable. If `NULL` then only a local git repo is initialized,
@@ -42,6 +43,7 @@
 #' @importFrom devtools create github_pat use_news_md
 #' use_github use_git use_testthat use_travis use_appveyor
 #' use_package_doc
+#' @importFrom git2r repository commit push
 #' @importFrom pkgdown init_site
 #' @importFrom usethis use_gpl3_license
 #' @md
@@ -53,6 +55,7 @@ init_iqss_package <- function(path,
                               use_pkgdown = TRUE,
                               use_gpl3 = TRUE,
                               use_tests = TRUE,
+                              use_git = TRUE,
                               github_auth_token = github_pat(),
                               github_protocol = "https",
                               change_wd = TRUE,
@@ -73,16 +76,22 @@ init_iqss_package <- function(path,
     setwd(path)
 
     # Version Control ----------------------------------------------------------
-    message('\n\n---- Version Control ----\n')
-    if (!missing(github_auth_token) || !is.null(github_auth_token)) {
+    if (use_git) {
+        message('\n\n---- Version Control ----\n')
+        
+        use_github <- !missing(github_auth_token) || !is.null(github_auth_token)
+        
+        if (use_github) {
+            use_github(auth_token = github_auth_token,
+                        protocol = github_protocol, ...)
+        }
+        else {
+            message("Initializing local git repo.\n\nPlease use a remote git service such as GitHub (<https://help.github.com/articles/adding-a-remote/>) to store and collaborate on your package's source code.\n")
+            use_git()
+        }
+    }
+    else message('\n\n---- No version control initialized. Please reconsider.\n')
 
-        use_github(auth_token = github_auth_token, protocol = github_protocol,
-                   ...)
-    }
-    else {
-        message("Initializing local git repo.\n\nPlease use a remote git service such as GitHub (<https://help.github.com/articles/adding-a-remote/>) to store and collaborate on your package's source code.\n")
-        use_git()
-    }
 
     ## Include dynamic documentation -------------------------------------------
 
@@ -126,6 +135,14 @@ init_iqss_package <- function(path,
 
     # Finalise -----------------------------------------------------------------
     message('\n\n---- Finalizing init ----\n')
+
+    if (use_git) {
+        commit_msg <- c('documentation')
+        if (use_gpl3) commit_msg <- paste(commit_msg, 'license', sep = ', ')
+        if (use_tests) commit_msg <- paste(commit_msg, 'tests', sep = ', ')
+        
+        add_commit_push(commit_msg = commit_msg, use_github = use_github)
+    }
     if (change_wd)
         message(sprintf('\nChanging working directory to: %s.\n', path))
     else

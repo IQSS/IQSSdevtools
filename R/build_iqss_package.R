@@ -71,8 +71,9 @@ build_iqss_package <- function(path = '.',
     }
 
     if (commit) {
-        message('\n---- Checking the committing changes ----\n')
+        message('\n---- Committing the changes ----\n')
         repo <- repository(path = path)
+        git2r::add(repo = repo, path = path)
         commit(repo = repo, message = commit_message, all = TRUE, ...)
         if (push_to_github)
             message('\n---- Pushing commit to GitHub ----\n')

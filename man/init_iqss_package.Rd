@@ -6,7 +6,7 @@
 \usage{
 init_iqss_package(path, description = getOption("devtools.desc"),
   use_rstudio = TRUE, use_pkgdown = TRUE, use_gpl3 = TRUE,
-  use_tests = TRUE, github_auth_token = github_pat(),
+  use_tests = TRUE, use_git = TRUE, github_auth_token = github_pat(),
   github_protocol = "https", change_wd = TRUE, ...)
 }
 \arguments{
@@ -28,6 +28,8 @@ for documenting the package.}
 \item{use_tests}{logical whether or not to initialize a test suite with the
 testthat package and continuous integration with Travis CI (for Linux and
 macOS) and Appveyor (for Windows).}
+
+\item{use_git}{logical whether or not to use git version control.}
 
 \item{github_auth_token}{Provide a personal access token (PAT) from
 \url{https://github.com/settings/tokens}. Defaults to the \code{GITHUB_PAT}
