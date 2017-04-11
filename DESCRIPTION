@@ -15,12 +15,17 @@ Description: The IQSSdevtools package makes it easy to initialize and compile an
 BugReports: https://github.com/IQSS/IQSSdevtools/issues
 Imports:
     covr,
+    desc,
     devtools,
+    digest,
+    gh,
     git2r,
     httr,
     rmarkdown,
     pkgdown,
+    rstudioapi,
     usethis,
+    whisker,
     yaml
 License: GPL-3 + file LICENSE
 Encoding: UTF-8

@@ -33,13 +33,13 @@
 #'                                      "This is a longer description of the package."))
 #' }
 #'
-#' @seealso \code{\link{create}} \code{\link{use_readme_rmd}}
-#' \code{\link{github_pat}} \code{\link{use_news_md}}
+#' @seealso \code{\link{create}} \code{\link{github_pat}}
+#' \code{\link{use_news_md}}
 #' \code{\link{use_gpl3_license}} \code{\link{use_github}}
 #' \code{\link{use_git}} \code{\link{use_testthat}} \code{\link{use_travis}}
 #' \code{\link{use_appveyor}} \code{\link{use_package_doc}},
-#' \code{\link{build_site}}
-#' @importFrom devtools create use_readme_rmd github_pat use_news_md
+#' \code{\link{init_site}}
+#' @importFrom devtools create github_pat use_news_md
 #' use_github use_git use_testthat use_travis use_appveyor
 #' use_package_doc
 #' @importFrom pkgdown init_site
@@ -72,11 +72,23 @@ init_iqss_package <- function(path,
     message(sprintf('\nChanging working directory to: %s.\n', path))
     setwd(path)
 
+    # Version Control ----------------------------------------------------------
+    message('\n\n---- Version Control ----\n')
+    if (!missing(github_auth_token) || !is.null(github_auth_token)) {
+
+        use_github(auth_token = github_auth_token, protocol = github_protocol,
+                   ...)
+    }
+    else {
+        message("Initializing local git repo.\n\nPlease use a remote git service such as GitHub (<https://help.github.com/articles/adding-a-remote/>) to store and collaborate on your package's source code.\n")
+        use_git()
+    }
+
     ## Include dynamic documentation -------------------------------------------
 
     ## RMarkdown based README
     message('\n\n---- Dynamic Documentation ----\n')
-    use_readme_rmd()
+    iqss_use_readme_rmd()
 
     cat('\n')
 
@@ -103,19 +115,6 @@ init_iqss_package <- function(path,
         use_gpl3_license()
     }
     else warning('\n*** No LICENSE included ***\n', call. = FALSE)
-
-
-    # Version Control ----------------------------------------------------------
-    message('\n\n---- Version Control ----\n')
-    if (!missing(github_auth_token) || !is.null(github_auth_token)) {
-
-        use_github(auth_token = github_auth_token, protocol = github_protocol,
-                   ...)
-    }
-    else {
-        message("Initializing local git repo.\n\nPlease use a remote git service such as GitHub (<https://help.github.com/articles/adding-a-remote/>) to store and collaborate on your package's source code.\n")
-        use_git()
-    }
 
     # Include testing infrastructure -------------------------------------------
     if (use_tests) {

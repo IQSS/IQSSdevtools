@@ -1,0 +1,59 @@
+{{#Rmd}}
+---{{#github}}
+output: github_document
+{{/github}}
+{{#^github}}
+output:
+  md_document:
+    variant: markdown_github
+{{/github}}
+---
+
+<!-- README.md is generated from README.Rmd. Please only edit README.Rmd -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    fig.path="man/figures/"
+)
+
+knitr::opts_knit$set(
+    stop_on_error = 2L
+)
+```
+
+{{/Rmd}}
+
+# {{{ Package }}}
+
+The aim of {{{ Package }}} is to ...
+
+{{#github}}
+## Installation
+
+You can install {{{ Package }}} from github with:
+
+{{#Rmd}}
+```{r gh-installation, eval = FALSE}
+{{/Rmd}}
+{{^Rmd}}
+``` r
+{{/Rmd}}
+# install.packages("devtools")
+devtools::install_github("{{{username}}}/{{{repo}}}")
+```
+
+{{/github}}
+## Example
+
+This is a basic example which shows you how to use the package in a common use
+case:
+
+{{#Rmd}}
+```{r example}
+{{/Rmd}}
+{{^Rmd}}``` r
+{{/Rmd}}
+## basic example code
+```

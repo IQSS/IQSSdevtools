@@ -67,3 +67,108 @@ uses_testthat <- function (pkg = ".")
         "tests", "testthat"))
     any(dir.exists(paths))
 }
+
+#' Create README files.
+#'
+#' Creates skeleton README files with sections for
+#' \itemize{
+#' \item a high-level description of the package and its goals
+#' \item R code to install from GitHub, if GitHub usage detected
+#' \item a basic example
+#' }
+#' Use \code{Rmd} if you want a rich intermingling of code and data. Use
+#' \code{md} for a basic README. \code{README.Rmd} will be automatically
+#' added to \code{.Rbuildignore}. The resulting README is populated with default
+#' YAML frontmatter and R fenced code blocks (\code{md}) or chunks (\code{Rmd}).
+#'
+#' @inheritParams iqss_use_template
+#' @examples
+#' \dontrun{
+#' iqss_use_readme_rmd()
+#' }
+#' @importFrom usethis use_git_hook
+#' @source Modified from usethis
+#' @export
+
+iqss_use_readme_rmd <- function(base_path = ".") {
+
+    data <- package_data(base_path)
+    data$Rmd <- TRUE
+
+    iqss_use_template(
+                    "omni-README",
+                    "README.Rmd",
+                    data = data,
+                    ignore = TRUE,
+                    open = TRUE,
+                    base_path = base_path
+    )
+    usethis_use_build_ignore("^README-.*\\.png$", escape = FALSE,
+                              base_path = base_path)
+
+    if (uses_git(base_path) && !file.exists(base_path, ".git", "hooks",
+        "pre-commit"))
+    {
+        usethis::use_git_hook(
+                            "pre-commit",
+                            render_template("readme-rmd-pre-commit.sh"),
+                            base_path = base_path
+        )
+    }
+  invisible(TRUE)
+}
+
+#' @source From usethis
+
+usethis_use_build_ignore <- function(files, escape = TRUE, base_path = ".")
+{
+    if (escape) {
+        files <- escape_path(files)
+    }
+    path <- file.path(base_path, ".Rbuildignore")
+    write_union(path, files)
+    invisible(TRUE)
+}
+
+#' @source From usethis
+
+escape_path <- function(x)
+{
+    x <- gsub("\\.", "\\\\.", x)
+    x <- gsub("/$", "", x)
+    paste0("^", x, "$")
+}
+
+#' @importFrom rstudioapi isAvailable hasFun navigateToFile
+#' @source From usethis
+
+open_in_rstudio <- function(path, base_path = ".") {
+    path <- file.path(base_path, path)
+
+    if (!rstudioapi::isAvailable())
+        return()
+    if (!rstudioapi::hasFun("navigateToFile"))
+        return()
+    rstudioapi::navigateToFile(path)
+}
+
+#' @source From usethis
+
+write_union <- function(path, new_lines, quiet = FALSE)
+{
+    stopifnot(is.character(new_lines))
+    if (file.exists(path)) {
+        lines <- readLines(path, warn = FALSE)
+    }
+    else {
+        lines <- character()
+    }
+    new <- setdiff(new_lines, lines)
+    if (!quiet && length(new) > 0) {
+        quoted <- paste0("'", new, "'", collapse = ", ")
+        message("* Adding ", quoted, " to '", basename(path),
+            "'")
+    }
+    all <- union(lines, new_lines)
+    writeLines(all, path)
+}

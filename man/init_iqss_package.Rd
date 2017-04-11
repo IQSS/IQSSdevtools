@@ -57,10 +57,10 @@ init_iqss_package(path = 'mypkg',
 
 }
 \seealso{
-\code{\link{create}} \code{\link{use_readme_rmd}}
-\code{\link{github_pat}} \code{\link{use_news_md}}
+\code{\link{create}} \code{\link{github_pat}}
+\code{\link{use_news_md}}
 \code{\link{use_gpl3_license}} \code{\link{use_github}}
 \code{\link{use_git}} \code{\link{use_testthat}} \code{\link{use_travis}}
 \code{\link{use_appveyor}} \code{\link{use_package_doc}},
-\code{\link{build_site}}
+\code{\link{init_site}}
 }
