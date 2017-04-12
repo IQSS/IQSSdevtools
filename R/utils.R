@@ -192,10 +192,10 @@ add_commit_push <- function(path = '.', commit_msg, use_github = TRUE) {
         if (!("try-error" %in% attr(remote_branch, "class"))) {
             push_result <- try(push(object = repo), silent = TRUE)
             if ("try-error" %in% attr(push_result, "class")) {
-                message(sprintf("Unable to push %s to GitHub.\n", commit_msg))
+                message(sprintf("Unable to push %s to GitHub.", commit_msg))
                 error_msg <- "Unable to authenticate with supplied credentials"
                 if (any(grepl(error_msg, attr(push_result, "condition"))))
-                    message('To allow IQSSdevtools to push to your repository, you may need an SSH key added to the ssh-agent.\nSee: https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/')
+                    message('  To allow IQSSdevtools to push to your repository, you may need an SSH key added to the ssh-agent.\n  See: https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/')
             }
         }
     }

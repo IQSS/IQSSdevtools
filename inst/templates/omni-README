@@ -42,6 +42,7 @@ knitr::opts_knit$set(
 {{/github}}
 <!-- BADGES END -->
 
+# Motivation
 
 The aim of {{{ Package }}} is to ...
 

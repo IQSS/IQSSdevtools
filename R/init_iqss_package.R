@@ -2,8 +2,8 @@
 #'
 #' @param path character string of the location to create new package.
 #'   The last component of the path will be used as the package name.
-#' @param description list of DESCRIPTION values to override default values or
-#'   add additional values.
+#' @param description list of values for the DESCRIPTION to override the default
+#'   values or add additional values.
 #' @param use_rstudio logical whether to create an Rstudio project file
 #'   <https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects>
 #'   (with \code{\link{use_rstudio}})?
@@ -45,6 +45,7 @@
 #' use_package_doc
 #' @importFrom git2r repository commit push
 #' @importFrom pkgdown init_site
+#' @importFrom rmarkdown render
 #' @importFrom usethis use_gpl3_license
 #' @md
 #' @export
@@ -63,6 +64,9 @@ init_iqss_package <- function(path,
 {
     if (missing(path))
         stop('path is required to initialize a new package.', call. = FALSE)
+    if (!is.list(description))
+        stop('description must be a list of values for the DESCRIPTION file.',
+            call. = FALSE)
 
     old_wd <- getwd()
     # init bare package --------------------------------------------------------
@@ -78,9 +82,9 @@ init_iqss_package <- function(path,
     # Version Control ----------------------------------------------------------
     if (use_git) {
         message('\n\n---- Version Control ----\n')
-        
+
         use_github <- !missing(github_auth_token) || !is.null(github_auth_token)
-        
+
         if (use_github) {
             use_github(auth_token = github_auth_token,
                         protocol = github_protocol, ...)
@@ -98,6 +102,7 @@ init_iqss_package <- function(path,
     ## RMarkdown based README
     message('\n\n---- Dynamic Documentation ----\n')
     iqss_use_readme_rmd()
+    render('README.Rmd')
 
     cat('\n')
 
@@ -140,7 +145,7 @@ init_iqss_package <- function(path,
         commit_msg <- c('documentation')
         if (use_gpl3) commit_msg <- paste(commit_msg, 'license', sep = ', ')
         if (use_tests) commit_msg <- paste(commit_msg, 'tests', sep = ', ')
-        
+
         add_commit_push(commit_msg = commit_msg, use_github = use_github)
     }
     if (change_wd)

@@ -13,8 +13,8 @@ init_iqss_package(path, description = getOption("devtools.desc"),
 \item{path}{character string of the location to create new package.
 The last component of the path will be used as the package name.}
 
-\item{description}{list of DESCRIPTION values to override default values or
-add additional values.}
+\item{description}{list of values for the DESCRIPTION to override the default
+values or add additional values.}
 
 \item{use_rstudio}{logical whether to create an Rstudio project file
 \url{https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects}
