@@ -102,7 +102,7 @@ init_iqss_package <- function(path,
     ## RMarkdown based README
     message('\n\n---- Dynamic Documentation ----\n')
     iqss_use_readme_rmd()
-    render('README.Rmd')
+    suppressMessages(render('README.Rmd', output_format = 'md_document'))
 
     cat('\n')
 
