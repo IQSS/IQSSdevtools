@@ -86,6 +86,8 @@ To install the development version using [devtools](https://CRAN.R-project.org/p
 library(devtools)
 
 install_github('hadley/pkgdown') # Not currently on CRAN
+install_github('r-pkgs/gh') # Not currently on CRAN
+install_github("r-pkgs/usethis")
 install_github('IQSS/IQSSdevtools')
 ```
 
