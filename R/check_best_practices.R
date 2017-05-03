@@ -79,7 +79,7 @@ check_best_practices <- function(path = ".",
         bp_list$Documentation$website$openscholar <- FALSE
     if ('docs' %in% pkg_files) {
         doc_files <- list.files(sprintf('%s/docs', pkg$path))
-        bp_list$Documentation$website$pkgdown_website <- 'docs/index.html' %in%
+        bp_list$Documentation$website$pkgdown_website <- 'index.html' %in%
                                                     doc_files
     }
     else

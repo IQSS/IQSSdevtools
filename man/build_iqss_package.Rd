@@ -7,8 +7,8 @@ generating documentation and running tests}
 \usage{
 build_iqss_package(path = ".", rdocs = TRUE, rdocs_args = c("rd",
   "collate", "namespace"), readme = TRUE, website = TRUE, check = TRUE,
-  git_commit = TRUE, commit_message = "IQSS package build",
-  push_to_github = TRUE, ...)
+  build_source = TRUE, build_args = NULL, git_commit = FALSE,
+  commit_message = "IQSS package build", push_to_github = FALSE, ...)
 }
 \arguments{
 \item{path}{character string of the package path.}
@@ -28,6 +28,11 @@ defaults to \code{c("collate", "namespace", "rd")}.}
 \item{check}{logical whether or not to use \code{\link{check_best_practices}}
 to check that the package can be built and passes all tests. Also generates
 an IQSS Report Card \url{https://github.com/IQSS/social_science_software_toolkit/blob/master/report_card/iqss_report_card_spec.md}.}
+
+\item{build_source}{logical whether or not to build the package source.}
+
+\item{build_args}{character vector of arguments to pass to
+\code{\link{build}}. Ignored if \code{build_source = FALSE}.}
 
 \item{git_commit}{logical whether or not to commit the build to git.}
 

@@ -41,7 +41,7 @@ Practice compliant elements to an existing R package {IN DEVELOPMENT}
 continuous integration.
 
 - `build_iqss_package`: builds and tests IQSS Best Practice elements in an R
-package {IN DEVELOPMENT}
+package.
 
 - `iqss_lintr`: lints package source code using IQSS R Style Guide
 {GUIDE and FUNCTION IN DEVELOPMENT}
