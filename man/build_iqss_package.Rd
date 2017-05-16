@@ -6,8 +6,9 @@
 generating documentation and running tests}
 \usage{
 build_iqss_package(path = ".", rdocs = TRUE, rdocs_args = c("rd",
-  "collate", "namespace"), readme = TRUE, website = TRUE, check = TRUE,
-  build_source = TRUE, build_args = NULL, git_commit = FALSE,
+  "collate", "namespace"), readme = TRUE, website = TRUE,
+  website_lazy = FALSE, check = TRUE, build_source = TRUE,
+  build_args = NULL, git_commit = FALSE,
   commit_message = "IQSS package build", push_to_github = FALSE, ...)
 }
 \arguments{
@@ -24,6 +25,9 @@ defaults to \code{c("collate", "namespace", "rd")}.}
 \item{readme}{logical whether or not to render the READEM.Rmd.}
 
 \item{website}{logical whether or not to render the package website.}
+
+\item{website_lazy}{logical whether to lazy build the website (e.g. only
+build pages with changed \code{Rmd} files) or not.}
 
 \item{check}{logical whether or not to use \code{\link{check_best_practices}}
 to check that the package can be built and passes all tests. Also generates

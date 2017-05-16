@@ -8,7 +8,7 @@ Authors@R: c(
     person("Institute for Quantitative Social Science", "Harvard University",
     role = "cph")
     )
-Date: 2017-04-21
+Date: 2017-05-16
 Description: The IQSSdevtools package makes it easy to initialize and compile an
     R software package that complies with the IQSS Best Practices for Software
     Statistical Software Development (SSD).
@@ -21,7 +21,7 @@ Imports:
     gh,
     git2r,
     httr,
-    pkgdown,
+    pkgdown (>= 0.1.0.9000),
     rmarkdown,
     rstudioapi,
     usethis,

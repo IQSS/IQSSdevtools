@@ -10,6 +10,8 @@
 #'   defaults to `c("collate", "namespace", "rd")`.
 #' @param readme logical whether or not to render the READEM.Rmd.
 #' @param website logical whether or not to render the package website.
+#' @param website_lazy logical whether to lazy build the website (e.g. only
+#'   build pages with changed \code{Rmd} files) or not.
 #' @param check logical whether or not to use \code{\link{check_best_practices}}
 #'   to check that the package can be built and passes all tests. Also generates
 #'   an IQSS Report Card <https://github.com/IQSS/social_science_software_toolkit/blob/master/report_card/iqss_report_card_spec.md>.
@@ -37,6 +39,7 @@ build_iqss_package <- function(path = '.',
                                rdocs_args = c('rd', 'collate', 'namespace'),
                                readme = TRUE,
                                website = TRUE,
+                               website_lazy = FALSE,
                                check = TRUE,
                                build_source = TRUE,
                                build_args = NULL,
@@ -72,7 +75,7 @@ build_iqss_package <- function(path = '.',
             warning('Necessary pkgdown files needed to build package website were not found.\nWebsit not built.',
             call. = FALSE)
         else
-            build_site()
+            build_site(lazy = website_lazy)
     }
 
     if (build_source)
