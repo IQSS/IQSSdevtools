@@ -207,29 +207,44 @@ test_doc_links <- function(path = ".", base_url) {
     library(rvest)
     library(httr)
 
+    ## Allow code to handle relative paths handed to it
+    if (path == ".") {
+        path <- getwd()
+    } else {
+        setwd(path)
+        path <- getwd()
+    }
+
     bad_articles <- "" ## Hacky declare to allow for later append
     bad_links <- ""
-    setwd("docs")
-    setwd("articles")
-    articles <- list.files(pattern = "html")
-    for (article in articles) {
-        links <- get_links(article)
-        for (link in links) {
-            if (bad_link(link)) {
-                bad_articles <- c(bad_articles, article)
-                bad_links <- c(bad_links, link)
-            }
-        }
+    current_dir <- ""
+    if (devtoolsis.package()) {
+        search_dirs <- c("man","docs","docs/articles","docs/news","docs/reference")
+    } else {
+        search_dirs <- path
+    }
+    for (directory in search_dirs) {
+      articles <- list.files(pattern = "html")
+      for (article in articles) {
+          links <- get_links(article)
+          for (link in links) {
+              if (bad_link(link)) {
+                  current_dir <- c(current_dir, directory)
+                  bad_articles <- c(bad_articles, article)
+                  bad_links <- c(bad_links, link)
+              }
+          }
+      }
+      setwd(path)
     }
 
     ## Clean Up Code
-    setwd("..")
-    setwd("..")
+    current_dir <- current_dir[2:length(current_dir)]
     bad_articles <- bad_articles[2:length(bad_articles)] ## Clean up earlier hack
     bad_links <- bad_links[2:length(bad_links)]
 
 
-    return(data.frame(bad_articles,bad_links))
+    return(data.frame(current_dir,bad_articles,bad_links))
 
 
 
@@ -249,8 +264,8 @@ get_html_links <- function(html_doc) {
 }
 
 
-#'
-#'
+#' Code to handle finding links in non-html documents.
+#' Currently cannot handle relative links
 #'
 #'
 #'
