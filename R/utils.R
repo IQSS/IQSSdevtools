@@ -201,7 +201,7 @@ add_commit_push <- function(path = '.', commit_msg, use_github = TRUE) {
     }
 }
 
-test_web_vignettes <- function() {
+test_doc_links <- function(path = ".", base_url) {
     ## Assumes that the current working directory is Zelig package top directory
     library(xml2)
     library(rvest)
@@ -237,14 +237,37 @@ test_web_vignettes <- function() {
 
 #' Parses an html document and returns a vector of all links in the document
 #'
-#'
+#' @param html_doc A path to an html file
 #' @author Ben Sabath
 #' @return Vector of urls
 #'
-get_links <- function(html_doc) {
+get_html_links <- function(html_doc) {
     doc <- read_html(html_doc)
     links <- html_attr(html_nodes(doc, "a"), "href")
     links <- clean_links(links)
+    return(links)
+}
+
+
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+get_other_links <- function(rd_doc) {
+    links <- ""
+    doc_str <- readLines(rd_doc)
+    words <- strsplit(doc_str,"[{} ()]")
+    for (line in words) {
+        for (word in line){
+            if (grepl("^http.*//",word)) {
+                links <- c(links, word)
+            }
+        }
+    }
+    links <- links[2:length(links)]
     return(links)
 }
 
@@ -263,6 +286,13 @@ clean_links <- function(links) {
     return(links)
 }
 
+
+#' A function for readability that handles checking of whether or not a link is functional
+#'
+#'
+#' @param link a URL
+#' @author Ben Sabath
+#' @return boolean of whether or not the link is functional
 bad_link <- function(link) {
     pg <- GET(link)
     return(pg$status != 200)
