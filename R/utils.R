@@ -203,9 +203,6 @@ add_commit_push <- function(path = '.', commit_msg, use_github = TRUE) {
 
 test_doc_links <- function(path = ".", base_url) {
     ## Assumes that the current working directory is Zelig package top directory
-    library(xml2)
-    library(rvest)
-    library(httr)
 
     ## Allow code to handle relative paths handed to it
     if (path == ".") {
@@ -218,16 +215,29 @@ test_doc_links <- function(path = ".", base_url) {
     bad_articles <- "" ## Hacky declare to allow for later append
     bad_links <- ""
     current_dir <- ""
-    if (devtoolsis.package()) {
-        search_dirs <- c("man","docs","docs/articles","docs/news","docs/reference")
+    if (devtools::is.package(devtools::as.package(path))) {
+        search_dirs <- c(path,"man","docs","docs/articles","docs/news","docs/reference")
     } else {
         search_dirs <- path
     }
     for (directory in search_dirs) {
-      articles <- list.files(pattern = "html")
+      if (!dir.exists(directory)) {next}
+      setwd(directory)
+      articles <- list.files()
       for (article in articles) {
-          links <- get_links(article)
+          ## print(article)
+          if (substr(article,nchar(article)-3,nchar(article)) == "html") {
+              links <- get_html_links(article)
+          } else if (substr(article,nchar(article)-1,nchar(article)) == "Rd") {
+              links <- get_rd_links(article)
+          } else if (substr(article,nchar(article)-1,nchar(article)) == "md"){
+              links <- get_md_links(article)
+          } else {
+              print("oops")
+              next
+          }
           for (link in links) {
+              if (link == "") next
               if (bad_link(link)) {
                   current_dir <- c(current_dir, directory)
                   bad_articles <- c(bad_articles, article)
@@ -235,6 +245,7 @@ test_doc_links <- function(path = ".", base_url) {
               }
           }
       }
+      ##print("Here!")
       setwd(path)
     }
 
@@ -271,10 +282,10 @@ get_html_links <- function(html_doc) {
 #'
 #'
 #'
-get_other_links <- function(rd_doc) {
+get_rd_links <- function(rd_doc) {
     links <- ""
     doc_str <- readLines(rd_doc)
-    words <- strsplit(doc_str,"[{} ()]")
+    words <- strsplit(doc_str,"[{} ]")
     for (line in words) {
         for (word in line){
             if (grepl("^http.*//",word)) {
@@ -282,21 +293,27 @@ get_other_links <- function(rd_doc) {
             }
         }
     }
-    links <- links[2:length(links)]
+    ## print(links)
+    if (length(links)>1) {
+        links <- links[2:length(links)]
+    }
     return(links)
 }
 
-clean_links <- function(links) {
-    link_head <- "http://docs.zeligproject.org"
-    article_head <- "http://docs.zeligproject.org/articles/"
+get_md_links <- function(md_doc) {
+    links <- ""
+    doc_str <- markdownToHTML(md_doc)
+    links <- get_html_links(doc_str)
+    return(links)
+
+}
+clean_links <- function(links, base_url = "") {
+    link_head <- base_url
     ## Remove internal page tags
     links <- links[substr(links,1,1) != "#"]
-    ## append website to links to other directories
-    dotdots <- substr(links,1,2) == ".."
-    links[dotdots] <- paste(link_head,substring(links[dotdots],3),sep="")
     ## append article lead to remaining
     not_http <- substr(links,1,4) != "http"
-    links[not_http] <- paste(article_head,links[not_http],sep="")
+    links[not_http] <- paste(link_head,links[not_http],sep="")
 
     return(links)
 }
@@ -309,6 +326,8 @@ clean_links <- function(links) {
 #' @author Ben Sabath
 #' @return boolean of whether or not the link is functional
 bad_link <- function(link) {
-    pg <- GET(link)
-    return(pg$status != 200)
+    pg <- tryCatch({GET(link)}, error = function(e) {return(TRUE)}) ##Handle Bad Servers
+    out <- tryCatch(pg$status != 200, error = function(e) {return(TRUE)})
+    return(out)
 }
+
