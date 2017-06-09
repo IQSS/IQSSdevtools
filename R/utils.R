@@ -201,9 +201,11 @@ add_commit_push <- function(path = '.', commit_msg, use_github = TRUE) {
     }
 }
 
-test_doc_links <- function(path = ".", base_url) {
+test_doc_links <- function(path = ".", base_url = "") {
     ## Assumes that the current working directory is Zelig package top directory
-
+    if (base_url == "") {
+        warning("No base url supplied, relative links may incorrectly be listed as broken")
+    }
     ## Allow code to handle relative paths handed to it
     if (path == ".") {
         path <- getwd()
@@ -318,6 +320,26 @@ clean_links <- function(links, base_url = "") {
     return(links)
 }
 
+
+check_links <- function(links) {
+    pool <- new_pool()
+    good_links_list <- list()
+    success <- function(req) {good_links_list <<- c(good_links_list, list(req))}
+    for (link in links) {
+        curl_fetch_multi(link, done = success, pool = pool)
+    }
+    multi_run(pool = pool)
+    good_links <- ""
+    for (result in good_links_list) {
+        cat(result$url, result$status, "\n")
+        if (result$status == 200) {
+            good_links <- c(good_links, result$url)
+        }
+    }
+    if (length(good_links)==1) return(links)
+    good_links<-good_links[2:length(good_links)]
+    return(setdiff(links,good_links))
+}
 
 #' A function for readability that handles checking of whether or not a link is functional
 #'
