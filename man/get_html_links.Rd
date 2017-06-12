@@ -4,7 +4,7 @@
 \alias{get_html_links}
 \title{Parses an html document and returns a vector of all links in the document}
 \usage{
-get_html_links(html_doc)
+get_html_links(html_doc, base_url = "")
 }
 \arguments{
 \item{html_doc}{A path to an html file}
