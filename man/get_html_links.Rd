@@ -7,10 +7,13 @@
 get_html_links(html_doc, base_url = "")
 }
 \arguments{
-\item{html_doc}{A path to an html file}
+\item{html_doc}{character string path to an html file}
+
+\item{base_url}{a character string of a domain for which relative links are
+subdomains.}
 }
 \value{
-Vector of urls
+a vector of urls
 }
 \description{
 Parses an html document and returns a vector of all links in the document

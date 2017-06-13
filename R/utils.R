@@ -195,22 +195,19 @@ add_commit_push <- function(path = '.', commit_msg, use_github = TRUE) {
                 message(sprintf("Unable to push %s to GitHub.", commit_msg))
                 error_msg <- "Unable to authenticate with supplied credentials"
                 if (any(grepl(error_msg, attr(push_result, "condition"))))
-                    message('  To allow IQSSdevtools to push to your repository, you may need an SSH key added to the ssh-agent.\n  See: https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/')
+                    message("  To allow IQSSdevtools to push to your repository, you may need an SSH key added to the ssh-agent.\n  See: https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/")
             }
         }
     }
 }
 
-#' Determine if all links in the package documentation are valid
+#' Determine if URLs in a package's documentation or directory are valid
 #'
-#' @param path A path pointing to an R package, or a directory containing R documentation.
-#' Default is the current directory.
-#' @param base_url The url under which your documentation lives. If one is not provided, relative links in your documentation may be incorrectly listed as broken.
+#' @param path A path pointing to an R package, or a directory containing R
+#'    documentation. The default is the current directory.
+#' @inheritParams clean_links
 #'
-#' @importFrom RCurl url.exists
-#' @importFrom xml2 read_html
-#' @importFrom rvest html_attr
-#' @importFrom markdown markdownToHTML
+#' @export
 
 test_doc_links <- function(path = ".", base_url = "") {
     ## Assumes that the current working directory is package top directory if no argument provided
@@ -228,7 +225,8 @@ test_doc_links <- function(path = ".", base_url = "") {
     bad_links <- ""
     current_dir <- ""
     if (devtools::is.package(devtools::as.package(path))) {
-        search_dirs <- c(path,"man","docs","docs/articles","docs/news","docs/reference")
+        search_dirs <- c(path, "man", "docs", "docs/articles", "docs/news",
+                         "docs/reference")
         if (base_url == "") {
             warning("No base url supplied, relative links may incorrectly be listed as broken")
         }
@@ -248,27 +246,25 @@ test_doc_links <- function(path = ".", base_url = "") {
           }
       }
 
-
     ## Clean Up Code
     bad_articles <- bad_articles[2:length(bad_articles)] ## Clean up earlier hack
     bad_links <- bad_links[2:length(bad_links)]
     setwd(start_path)
 
-
     return(data.frame(bad_articles,bad_links))
-
-
-
 }
 
 #' Parses an html document and returns a vector of all links in the document
 #'
-#' @param html_doc A path to an html file
+#' @param html_doc character string path to an html file
+#' @inheritParams clean_links
+#'
 #' @author Ben Sabath
-#' @return Vector of urls
+#' @return a vector of urls
 #'
 #' @importFrom xml2 read_html
-#' @importFrom rvest html_attr
+#' @importFrom rvest html_attr html_nodes
+
 get_html_links <- function(html_doc, base_url = "") {
     doc <- read_html(html_doc)
     links <- html_attr(html_nodes(doc, "a"), "href")
@@ -277,10 +273,13 @@ get_html_links <- function(html_doc, base_url = "") {
 }
 
 
-# Handles parsing of r documentation files
-get_rd_links <- function(rd_doc) {
+#' Extract links from Rd documentation files
+#'
+#' @param path character string path to an Rd R documentation file.
+
+get_rd_links <- function(path) {
     links <- ""
-    doc_str <- readLines(rd_doc)
+    doc_str <- readLines(path)
     words <- strsplit(doc_str,"[{} ]")
     for (line in words) {
         for (word in line){
@@ -296,66 +295,58 @@ get_rd_links <- function(rd_doc) {
     return(links)
 }
 
-# Handles parsing of markdown type files
+#' Parse markdown files to HTML and extract URLs
+#'
+#' @param path character string path to a markdown file.
+#' @inheritParams clean_links
+#'
+#' @importFrom markdown markdownToHTML
 
-get_md_links <- function(md_doc, base_url = "") {
+get_md_links <- function(path, base_url = "") {
     links <- ""
-    doc_str <- markdownToHTML(md_doc)
+    doc_str <- markdownToHTML(path)
     links <- get_html_links(doc_str)
     return(links)
 
 }
 
-# attempts to handle preparation of relative links
-# not comprehensive, but mostly functional
+#' Prepares relative links for checking
+#'
+#' @param links vector of URLs
+#' @param base_url a character string of a domain for which relative links are
+#'    subdomains.
+
 clean_links <- function(links, base_url = "") {
-    link_head <- base_url
     ## Remove internal page tags
     links <- links[substr(links,1,1) != "#"]
     #Clean Relative links
     dotdots <- substr(links,1,2) == ".."
-    links[dotdots] <- paste(link_head,substring(links[dotdots],3),sep="")
+    links[dotdots] <- paste(base_url, substring(links[dotdots], 3), sep = "")
     ## append article lead to remaining
     not_http <- substr(links,1,4) != "http"
-    links[not_http] <- paste(link_head,"/",links[not_http],sep="")
+    links[not_http] <- paste(base_url, "/", links[not_http], sep = "")
 
     return(links)
 }
 
-## EXPERIMENTAL ##
-# checks links asynchronously
-# not currently fully functioning
-check_links <- function(links) {
-    pool <- new_pool()
-    good_links_list <- list()
-    success <- function(req) {good_links_list <<- c(good_links_list, list(req))}
-    for (link in links) {
-        curl_fetch_multi(link, done = success, pool = pool)
-    }
-    multi_run(pool = pool)
-    good_links <- ""
-    for (result in good_links_list) {
-        cat(result$url, result$status, "\n")
-        if (result$status == 200) {
-            good_links <- c(good_links, result$url)
-        }
-    }
-    if (length(good_links)==1) return(links)
-    good_links<-good_links[2:length(good_links)]
-    return(setdiff(links,good_links))
-}
-
-# wraps url.exists, link checking algorithm can be changed if needed
-
+#' Check a URL is dead
+#'
+#' @param link character string URL link
+#'
 #' @importFrom RCurl url.exists
 bad_link <- function(link) {
     return(!url.exists(link))
 }
 
-# code to parse files in parallel
-# needs additions to track file containing the link to be "done"
-multifile_link_parse <- function(file_list) {
-    file_links <- mclapply(file_list,parse_file, mc.cores = detectCores())
+#' Parse documentation files in parallel
+#'
+#' @param paths vector of file paths
+#'
+#' @importFrom parallel mclapply detectCores
+
+multifile_link_parse <- function(paths) {
+    # needs additions to track file containing the link to be "done"
+    file_links <- mclapply(paths, parse_file, mc.cores = detectCores())
     links <- character(0)
     for (file in file_links) {
         links <- union(links, file)
@@ -363,27 +354,40 @@ multifile_link_parse <- function(file_list) {
     return(links)
 }
 
-# gathers the list of all files in the package in a single vector
+#' Gathers documenttion files paths into a single vector
+#'
+#' @param search_dirs vector of paths to directories to search for
+#'    documentation.
+
 get_file_list <- function(search_dirs) {
     out <- character(0)
     for (directory in search_dirs) {
         if (!dir.exists(directory)) {next}
         articles <- list.files(directory)
-        articles <- paste(directory,"/", articles, sep = "")
+        articles <- file.path(directory, articles)
+        #articles <- paste(directory, "/", articles, sep = "")
         out <- c(out, articles)
     }
     return(out)
 }
 
-# wraps the code passing individual files to their specific parsers
-# allows for future addition of filetypes if needed
-parse_file <- function(file_name, base_url = "") {
-    if (substr(file_name,nchar(file_name)-3,nchar(file_name)) == "html") {
-        links <- get_html_links(file_name, base_url)
-    } else if (substr(file_name,nchar(file_name)-1,nchar(file_name)) == "Rd") {
-        links <- get_rd_links(file_name)
-    } else if (substr(file_name,nchar(file_name)-1,nchar(file_name)) == "md"){
-        links <- get_md_links(file_name, base_url)
+#' Extract URL links from documentation files
+#'
+#' @param path character string of file path to extract links from
+#' @inheritParams clean_links
+#'
+#' @details Currently extracts links for HTML, Rd, and markdown files. Allows
+#'    for future addition of file types if needed
+#'
+#' @importFrom tools file_ext
+
+parse_file <- function(path, base_url = "") {
+    if (file_ext(path) == "html") {
+        links <- get_html_links(path, base_url)
+    } else if (file_ext(path) == "Rd") {
+        links <- get_rd_links(path)
+    } else if (file_ext(path) == "md"){
+        links <- get_md_links(path, base_url)
     } else {
         links <- character(0)
     }

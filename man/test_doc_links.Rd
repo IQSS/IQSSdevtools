@@ -2,16 +2,17 @@
 % Please edit documentation in R/utils.R
 \name{test_doc_links}
 \alias{test_doc_links}
-\title{Determine if all links in the package documentation are valid}
+\title{Determine if URLs in a package's documentation or directory are valid}
 \usage{
 test_doc_links(path = ".", base_url = "")
 }
 \arguments{
-\item{path}{A path pointing to an R package, or a directory containing R documentation.
-Default is the current directory.}
+\item{path}{A path pointing to an R package, or a directory containing R
+documentation. The default is the current directory.}
 
-\item{base_url}{The url under which your documentation lives. If one is not provided, relative links in your documentation may be incorrectly listed as broken.}
+\item{base_url}{a character string of a domain for which relative links are
+subdomains.}
 }
 \description{
-Determine if all links in the package documentation are valid
+Determine if URLs in a package's documentation or directory are valid
 }
