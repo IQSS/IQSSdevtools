@@ -8,6 +8,9 @@
 #' @param report_results logical whether or not to report the results to the
 #' console.
 #' @param list_results logical whether or not to return the results as a list.
+#' @param check_urls logical whether or not to check that URLs point to sites
+#' that exist.
+#' @inheritParams clean_links
 #' @param run_cran_check logical whether or not to run CRAN check.
 #' @param calculate_coverage logical whether or not to calculate test coverage.
 #'
@@ -41,6 +44,8 @@ check_best_practices <- function(path = ".",
                                  save_results = TRUE,
                                  report_results = TRUE,
                                  list_results = FALSE,
+                                 check_urls = TRUE,
+                                 base_url,
                                  run_cran_check = TRUE,
                                  calculate_coverage = TRUE)
 {
@@ -55,13 +60,19 @@ check_best_practices <- function(path = ".",
     message('* checking documentation . . .')
     bp_list$Documentation$readme <- 'README.Rmd' %in% pkg_files
 
-    bp_list$Documentation$roxygen <- 'roxygen' %in% names(pkg)
+    bp_list$Documentation$roxygen <- any(grepl('roxygen', names(pkg)))
 
     bp_list$Documentation$news <- 'NEWS.md' %in% pkg_files
 
     bp_list$Documentation$bugreports <- 'bugreports' %in% names(pkg)
 
     bp_list$Documentation$vignettes <- 'vignettes' %in% pkg_files
+
+    if (check_urls)
+        bp_list$Documentation$all_urls_working <- !is.data.frame(
+                                                        check_doc_links(
+                                                        path = path,
+                                                        base_url = base_url))
 
     # openscholar
     if ('url' %in% names(pkg)) {
@@ -144,7 +155,7 @@ check_best_practices <- function(path = ".",
     else
         bp_list$Background$commit <- NULL
     iqssdevtools_version <- as.character(paste(packageVersion("IQSSdevtools")))
-    bp_list$Background$iqss_bestpractices_version <- "0.0.0.9000"
+    bp_list$Background$iqss_bestpractices_version <- "0.0.0.9001"
     bp_list$Background$iqssdevtools_version <- iqssdevtools_version
     bp_list$Background$check_time <- as.character(Sys.time())
 

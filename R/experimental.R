@@ -20,3 +20,19 @@ check_links <- function(links) {
     good_links<-good_links[2:length(good_links)]
     return(setdiff(links,good_links))
 }
+
+#' Parse documentation files in parallel
+#'
+#' @param paths vector of file paths
+#'
+#' @importFrom parallel mclapply detectCores
+
+multifile_link_parse <- function(paths) {
+    # needs additions to track file containing the link to be "done"
+    file_links <- mclapply(paths, parse_file, mc.cores = detectCores())
+    links <- character(0)
+    for (file in file_links) {
+        links <- union(links, file)
+    }
+    return(links)
+}

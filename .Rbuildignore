@@ -5,3 +5,4 @@
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^\.iqss_reportcard\.yml$
+R/experimental.R$

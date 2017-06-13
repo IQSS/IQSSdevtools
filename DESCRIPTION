@@ -23,7 +23,6 @@ Imports:
     httr,
     markdown,
     pkgdown (>= 0.1.0.9000),
-    RCurl,
     rmarkdown,
     rstudioapi,
     rvest,

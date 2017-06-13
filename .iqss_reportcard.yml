@@ -6,6 +6,7 @@
   news: yes
   bugreports: yes
   vignettes: yes
+  all_urls_working: no
   website:
     openscholar: no
     pkgdown_website: no
@@ -22,13 +23,13 @@ Testing:
     build_check_completed: yes
     no_check_warnings: yes
     no_check_errors: yes
-    no_check_notes: no
-  test_coverage: 0
+    no_check_notes: yes
+  test_coverage: 9
 Background:
   package_name: IQSSdevtools
   package_version: 0.0.0.9000
   package_language: R
-  package_commit_sha: dcae5a1a5d5fc6515ab978c67fc73f661060479a
+  package_commit_sha: 9afabf4e7438f8b6f2628b8dd83e6985f64268a9
   iqss_bestpractices_version: 0.0.0.9000
   iqssdevtools_version: 0.0.0.9000
-  check_time: 2017-04-05 09:48:08
+  check_time: 2017-06-13 14:45:38

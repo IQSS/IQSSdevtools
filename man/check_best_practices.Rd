@@ -6,8 +6,8 @@
 Statistical Software Development}
 \usage{
 check_best_practices(path = ".", save_results = TRUE,
-  report_results = TRUE, list_results = FALSE, run_cran_check = TRUE,
-  calculate_coverage = TRUE)
+  report_results = TRUE, list_results = FALSE, check_urls = TRUE,
+  base_url, run_cran_check = TRUE, calculate_coverage = TRUE)
 }
 \arguments{
 \item{path}{character string of the package path.}
@@ -20,6 +20,12 @@ check in the package directory in a YAML file called
 console.}
 
 \item{list_results}{logical whether or not to return the results as a list.}
+
+\item{check_urls}{logical whether or not to check that URLs point to sites
+that exist.}
+
+\item{base_url}{a character string for a domain for which relative links are
+subdomains. Used to resolve relative URL paths in documentation.}
 
 \item{run_cran_check}{logical whether or not to run CRAN check.}
 
