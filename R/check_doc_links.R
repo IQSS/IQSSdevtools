@@ -5,7 +5,7 @@
 #' @inheritParams clean_links
 #'
 #' @examples
-#' test_doc_links()
+#' check_doc_links()
 #'
 #' @importFrom devtools as.package
 #' @importFrom httr http_error
@@ -92,6 +92,7 @@ get_html_links <- function(html_doc, base_url = "") {
 get_rd_links <- function(path, base_url) {
     links <- vector()
     doc_str <- readLines(path)
+    doc_str <- unlist(strsplit(doc_str, " "))
     doc_str <- doc_str[grep("url\\{.*\\}", doc_str)]
     doc_str <- gsub("^.*\\{", "", doc_str)
     doc_str <- gsub("\\}.*$", "", doc_str)
@@ -174,7 +175,7 @@ get_file_list <- function(search_dirs) {
 parse_file <- function(path, base_url) {
     if (missing(base_url)) base_url <- ""
     if (file_ext(path) == "html") {
-        links <- get_html_links(path, base_ur = base_url)
+        links <- get_html_links(path, base_url = base_url)
     } else if (file_ext(path) == "Rd") {
         links <- get_rd_links(path, base_url = base_url)
     } else if (file_ext(path) == "md"){

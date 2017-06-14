@@ -168,8 +168,7 @@ write_union <- function(path, new_lines, quiet = FALSE)
     new <- setdiff(new_lines, lines)
     if (!quiet && length(new) > 0) {
         quoted <- paste0("'", new, "'", collapse = ", ")
-        message("* Adding ", quoted, " to '", basename(path),
-            "'")
+        message("* Adding ", quoted, " to '", basename(path), "'")
     }
     all <- union(lines, new_lines)
     writeLines(all, path)
