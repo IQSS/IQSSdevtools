@@ -1,4 +1,4 @@
-#' Determine if URLs in a package's documentation or directory are valid
+#' Determine if URLs in a package's documentation are valid
 #'
 #' @param path A path pointing to an R package, or a directory containing R
 #'    documentation. The default is the current directory.
@@ -8,7 +8,6 @@
 #' check_doc_links()
 #'
 #' @importFrom devtools as.package
-#' @importFrom httr http_error
 #' @export
 
 check_doc_links <- function(path = ".", base_url) {
@@ -40,7 +39,7 @@ check_doc_links <- function(path = ".", base_url) {
         links <- parse_file(i, base_url)
         for (u in links) {
             if (u == "") next
-            link_error <- tryCatch(http_error(u), error = function(e) e)
+            link_error <- tryCatch(get_error(u), error = function(e) e)
             if (any(class(link_error) == "error")) link_error <- TRUE
             if (link_error) {
                 bad_articles <- c(bad_articles, i)
@@ -64,6 +63,19 @@ check_doc_links <- function(path = ".", base_url) {
 
 }
 
+#' Error in GET call
+#'
+#' @param URL
+#'
+#' @importFrom httr status_code GET
+
+get_error <- function(URL) {
+    if(status_code(GET(URL)) %in% c(400, 404))
+        return(TRUE)
+    else
+        return(FALSE)
+}
+
 #' Parses an html document and returns a vector of all links in the document
 #'
 #' @param html_doc character string path to an html file
@@ -82,7 +94,6 @@ get_html_links <- function(html_doc, base_url = "") {
     return(links)
 }
 
-
 #' Extract links from Rd documentation files
 #'
 #' @param path character string path to an Rd R documentation file.
@@ -96,17 +107,8 @@ get_rd_links <- function(path, base_url) {
     doc_str <- doc_str[grep("url\\{.*\\}", doc_str)]
     doc_str <- gsub("^.*\\{", "", doc_str)
     doc_str <- gsub("\\}.*$", "", doc_str)
-#    words <- strsplit(doc_str,"[{} ]")
     links <- gsub("\\\\\\\\%20", "\\%20", doc_str)
     links <- clean_links(links, base_url)
-
-#    for (line in words) {
-#        for (word in line){
-#            if (grepl("^http.*//", word)) {
-#                links <- c(links, word)
-#            }
-#        }
-#    }
 
     return(links)
 }
@@ -132,6 +134,8 @@ get_md_links <- function(path, base_url = "") {
 #'    subdomains. Used to resolve relative URL paths in documentation.
 
 clean_links <- function(links, base_url = "") {
+    ## Remove trailing /
+    if (!missing(base_url)) base_url <- gsub("/$", "", base_url)
     ## Remove internal page tags
     links <- links[substr(links, 1, 1) != "#"]
     #Clean Relative links

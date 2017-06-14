@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_doc_links.R
 \name{check_doc_links}
 \alias{check_doc_links}
-\title{Determine if URLs in a package's documentation or directory are valid}
+\title{Determine if URLs in a package's documentation are valid}
 \usage{
 check_doc_links(path = ".", base_url)
 }
@@ -14,7 +14,7 @@ documentation. The default is the current directory.}
 subdomains. Used to resolve relative URL paths in documentation.}
 }
 \description{
-Determine if URLs in a package's documentation or directory are valid
+Determine if URLs in a package's documentation are valid
 }
 \examples{
 check_doc_links()
