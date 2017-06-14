@@ -21,15 +21,15 @@ Testing:
   uses_appveyor: yes
   build_check:
     build_check_completed: yes
-    no_check_warnings: yes
+    no_check_warnings: no
     no_check_errors: yes
     no_check_notes: yes
-  test_coverage: 9
+  test_coverage: 12
 Background:
   package_name: IQSSdevtools
   package_version: 0.0.0.9000
   package_language: R
-  package_commit_sha: 9afabf4e7438f8b6f2628b8dd83e6985f64268a9
-  iqss_bestpractices_version: 0.0.0.9000
+  package_commit_sha: d07a4519269b6a7aa7aed1f569a6e2b2631c2712
+  iqss_bestpractices_version: 0.0.0.9001
   iqssdevtools_version: 0.0.0.9000
-  check_time: 2017-06-13 14:45:38
+  check_time: 2017-06-14 15:34:36

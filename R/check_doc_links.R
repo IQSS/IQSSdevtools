@@ -140,10 +140,10 @@ clean_links <- function(links, base_url = "") {
     links <- links[substr(links, 1, 1) != "#"]
     #Clean Relative links
     dotdots <- substr(links, 1, 2) == ".."
-    links[dotdots] <- paste(base_url, substring(links[dotdots], 3), sep = "")
+    links[dotdots] <- paste0(base_url, substring(links[dotdots], 3))
     ## append article lead to remaining
     not_http <- substr(links, 1, 4) != "http"
-    links[not_http] <- paste(base_url, "/", links[not_http], sep = "")
+    links[not_http] <- paste0(base_url, "/", links[not_http])
 
     return(links)
 }
