@@ -148,7 +148,7 @@ clean_links <- function(links, base_url = "") {
     return(links)
 }
 
-#' Gathers documenttion files paths into a single vector
+#' Gathers documentation files paths into a single vector
 #'
 #' @param search_dirs vector of paths to directories to search for
 #'    documentation.
