@@ -12,6 +12,10 @@ clean_links(links, base_url = "")
 \item{base_url}{a character string for a domain for which relative links are
 subdomains. Used to resolve relative URL paths in documentation.}
 }
+\value{
+A list of links, where each link is either a single link, or a vector
+of a relative link attached to all possible base urls.
+}
 \description{
 Prepares relative links for checking
 }

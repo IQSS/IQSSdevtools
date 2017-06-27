@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_doc_links.R
 \name{get_file_list}
 \alias{get_file_list}
-\title{Gathers documenttion files paths into a single vector}
+\title{Gathers documentation files paths into a single vector}
 \usage{
 get_file_list(search_dirs)
 }
@@ -11,5 +11,5 @@ get_file_list(search_dirs)
 documentation.}
 }
 \description{
-Gathers documenttion files paths into a single vector
+Gathers documentation files paths into a single vector
 }

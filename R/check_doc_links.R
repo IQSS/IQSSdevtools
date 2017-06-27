@@ -37,15 +37,9 @@ check_doc_links <- function(path = ".", base_url) {
     for (i in articles) {
         message(i)
         links <- parse_file(i, base_url)
-        for (u in links) {
-            if (u == "") next
-            link_error <- tryCatch(get_error(u), error = function(e) e)
-            if (any(class(link_error) == "error")) link_error <- TRUE
-            if (link_error) {
-                bad_articles <- c(bad_articles, i)
-                bad_links <- c(bad_links, u)
-            }
-        }
+        bad <- try_links(links)
+        bad_links <- c(bad_links, bad)
+        bad_articles <- c(bad_articles, rep_len(i, length(bad)))
     }
     out <- data.frame(file = bad_articles, URL = bad_links,
                       stringsAsFactors = FALSE)
@@ -65,7 +59,7 @@ check_doc_links <- function(path = ".", base_url) {
 
 #' Error in GET call
 #'
-#' @param URL
+#' @param URL a string containing a URL
 #'
 #' @importFrom httr status_code GET
 
@@ -132,20 +126,31 @@ get_md_links <- function(path, base_url = "") {
 #' @param links vector of URLs
 #' @param base_url a character string for a domain for which relative links are
 #'    subdomains. Used to resolve relative URL paths in documentation.
+#'
+#' @return A list of links, where each link is either a single link, or a vector
+#'     of a relative link attached to all possible base urls.
 
 clean_links <- function(links, base_url = "") {
+    out <- list()
+    ## Allow original link to stay for dataframe
+    if (base_url[1] != "") base_url <- c("",base_url)
     ## Remove trailing /
     if (!missing(base_url)) base_url <- gsub("/$", "", base_url)
     ## Remove internal page tags
     links <- links[substr(links, 1, 1) != "#"]
     #Clean Relative links
-    dotdots <- substr(links, 1, 2) == ".."
-    links[dotdots] <- paste0(base_url, substring(links[dotdots], 3))
-    ## append article lead to remaining
-    not_http <- substr(links, 1, 4) != "http"
-    links[not_http] <- paste0(base_url, "/", links[not_http])
+    for (link in links) {
+        if(substr(link, 1, 2) == ".."){
+            out <- append(out,list(paste0(base_url, substring(link, 3))))
+        } else if (substr(link, 1, 4) != "http") {
+            ## append article lead to remaining
+            out <- append(out, list(paste0(base_url, "/", link)))
+        } else {
+            out <- append(out, link)
+        }
+    }
 
-    return(links)
+    return(out)
 }
 
 #' Gathers documentation files paths into a single vector
@@ -188,4 +193,32 @@ parse_file <- function(path, base_url) {
         links <- character(0)
     }
     return(links)
+}
+
+
+#' Contains code handling the determination of whether or not links are bad.
+#'
+#' @param links a list of links processed by \code{clean_links}
+#'
+#'
+try_links <- function(links) {
+    bad_links <- vector()
+    for (link in links) {
+        good <- FALSE
+        if (link[1] == "") next
+        for (i in link) {
+            ##browser()
+            link_error <- tryCatch(get_error(i), error = function(e) e)
+            if (any(class(link_error) == "error")) link_error <- TRUE
+            if (link_error) {
+                next
+            } else {
+                good <- TRUE
+                break
+            }
+        }
+        if (!good) bad_links <- c(bad_links, link[1])
+    }
+
+    return(bad_links)
 }

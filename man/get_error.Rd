@@ -7,7 +7,7 @@
 get_error(URL)
 }
 \arguments{
-\item{URL}{}
+\item{URL}{a string containing a URL}
 }
 \description{
 Error in GET call
