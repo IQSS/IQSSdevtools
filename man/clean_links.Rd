@@ -9,12 +9,13 @@ clean_links(links, base_url = "")
 \arguments{
 \item{links}{vector of URLs}
 
-\item{base_url}{a character string for a domain for which relative links are
-subdomains. Used to resolve relative URL paths in documentation.}
+\item{base_url}{a character string or vector of character strings for a
+domain or domains for which relative links are subdomains. Used to resolve
+relative URL paths in documentation.}
 }
 \value{
 A list of links, where each link is either a single link, or a vector
-of a relative link attached to all possible base urls.
+of a relative link attached to all possible base URLs.
 }
 \description{
 Prepares relative links for checking

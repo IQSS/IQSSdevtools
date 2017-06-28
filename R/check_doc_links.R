@@ -76,7 +76,7 @@ get_error <- function(URL) {
 #' @inheritParams clean_links
 #'
 #' @author Ben Sabath
-#' @return a vector of urls
+#' @return a vector of URLs
 #'
 #' @importFrom xml2 read_html
 #' @importFrom rvest html_attr html_nodes
@@ -124,11 +124,12 @@ get_md_links <- function(path, base_url = "") {
 #' Prepares relative links for checking
 #'
 #' @param links vector of URLs
-#' @param base_url a character string for a domain for which relative links are
-#'    subdomains. Used to resolve relative URL paths in documentation.
+#' @param base_url a character string or vector of character strings for a
+#' domain or domains for which relative links are subdomains. Used to resolve
+#'    relative URL paths in documentation.
 #'
 #' @return A list of links, where each link is either a single link, or a vector
-#'     of a relative link attached to all possible base urls.
+#'     of a relative link attached to all possible base URLs.
 
 clean_links <- function(links, base_url = "") {
     out <- list()

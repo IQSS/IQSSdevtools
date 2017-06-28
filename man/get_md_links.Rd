@@ -9,8 +9,9 @@ get_md_links(path, base_url = "")
 \arguments{
 \item{path}{character string path to a markdown file.}
 
-\item{base_url}{a character string for a domain for which relative links are
-subdomains. Used to resolve relative URL paths in documentation.}
+\item{base_url}{a character string or vector of character strings for a
+domain or domains for which relative links are subdomains. Used to resolve
+relative URL paths in documentation.}
 }
 \description{
 Parse markdown files to HTML and extract URLs

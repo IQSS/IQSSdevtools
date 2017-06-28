@@ -10,8 +10,9 @@ check_doc_links(path = ".", base_url)
 \item{path}{A path pointing to an R package, or a directory containing R
 documentation. The default is the current directory.}
 
-\item{base_url}{a character string for a domain for which relative links are
-subdomains. Used to resolve relative URL paths in documentation.}
+\item{base_url}{a character string or vector of character strings for a
+domain or domains for which relative links are subdomains. Used to resolve
+relative URL paths in documentation.}
 }
 \description{
 Determine if URLs in a package's documentation are valid

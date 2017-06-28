@@ -24,8 +24,9 @@ console.}
 \item{check_urls}{logical whether or not to check that URLs point to sites
 that exist.}
 
-\item{base_url}{a character string for a domain for which relative links are
-subdomains. Used to resolve relative URL paths in documentation.}
+\item{base_url}{a character string or vector of character strings for a
+domain or domains for which relative links are subdomains. Used to resolve
+relative URL paths in documentation.}
 
 \item{run_cran_check}{logical whether or not to run CRAN check.}
 
